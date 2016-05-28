@@ -1,46 +1,48 @@
 var React = require('react');
 
-var ControlPanel = React.createClass({
-  render: function() {
-    return (
-    <div className="controlPanel">
-        <form className="pure-form">
-            <fieldset>
-                <legend><h1>Авиарейсы</h1></legend>
-                <div classNameName="pure-g">
+var FromCity = require('./controlpanel/fromcity.jsx');
+var ToCity = require('./controlpanel/tocity.jsx');
+var State = require('./controlpanel/state.jsx');
 
-                    <div className="pure-u-6-24">
-                        <label for="from_city">Город отправления</label>
-                        <select id="from_city" className="pure-input-1-2">
-                            <option>1</option>
-                            <option>2</option>
-                        </select>
-                    </div>
-                    <div className="pure-u-6-24">
-                        <label for="to_city">Город прибытия</label>
-                        <select id="to_city" className="pure-input-1-2">
-                            <option>1</option>
-                            <option>2</option>
-                        </select>
-                    </div>
-                    <div className="pure-u-5-24">
-                        <label for="state">Статус</label>
-                        <select id="state" className="pure-input-1-2">
-                            <option>задержан</option>
-                            <option>2</option>
-                        </select>
-                    </div>
-                    <div className="pure-u-3-24">
-                        <div className="counter">Авиорейсов: 001</div>
-                    </div>
-                    <div className="pure-u-3-24">
-                        <button className="button-large pure-button">Редактировать</button>
-                    </div>
+var ControlPanel = React.createClass({
+    getInitialState: function() {
+        return { 
+            isEdition: false
+        };
+    },
+
+    switchMode: function(e){
+        var isEdition = this.props.onSwitchMode();
+        this.setState({isEdition: isEdition});
+        e.preventDefault();
+    },
+
+    render: function() {
+        return (
+        <div className="controlPanel">
+        <form className="pure-form">
+        <fieldset>
+            <legend><h1>Авиарейсы</h1></legend>
+            <div classNameName="pure-g">
+
+                <FromCity cities={this.props.cities}/>
+                <ToCity cities={this.props.cities} />
+                <State states={this.props.states} />
+     
+                <div className="pure-u-3-24">
+                    <div className="counter">Авиорейсов: 001</div>
                 </div>
-            </fieldset>
+                <div className="pure-u-3-24">
+                    <button className="button-large pure-button" 
+                            onClick={this.switchMode}>
+                            { this.state.isEdition ? "Выйти из редактирования" : "Редактировать" }
+                    </button>
+                </div>
+            </div>
+        </fieldset>
         </form>
-    </div>);
-  }
+        </div>);
+    }
 });
 
 module.exports = ControlPanel;
