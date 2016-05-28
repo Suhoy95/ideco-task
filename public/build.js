@@ -51,9 +51,9 @@
 
 	ReactDOM.render(React.createElement(
 	  'h1',
-	  null,
+	  { className: 'hehe' },
 	  'Hello, world!'
-	), document.getElementById('airlineTable'));
+	), document.getElementById('main'));
 
 /***/ },
 /* 1 */

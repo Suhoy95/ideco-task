@@ -3,10 +3,166 @@
     <head>
         <meta charset="utf-8">
         <title>Авиарейсы</title>
-        <link rel="stylesheet" href="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/pure-min.css" />
+        <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
-        <div id="airlineTable"></div>
+        <div class="wrapper">
+        
+            <div id="controlPanel">
+                <form class="pure-form">
+                    <fieldset>
+                        <legend><h1>Авиарейсы</h1></legend>
+                        <div class="pure-g">
+
+                            <div class="pure-u-6-24">
+                                <label for="from_city">Город отправления</label>
+                                <select id="from_city" class="pure-input-1-2">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="pure-u-6-24">
+                                <label for="to_city">Город прибытия</label>
+                                <select id="to_city" class="pure-input-1-2">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="pure-u-5-24">
+                                <label for="state">Статус</label>
+                                <select id="state" class="pure-input-1-2">
+                                    <option>задержан</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="pure-u-3-24">
+                                <div class="counter">Авиорейсов: 001</div>
+                            </div>
+                            <div class="pure-u-3-24">
+                                <button class="button-large pure-button">Редактировать</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div id="airlineTable">
+                <table class="pure-table full-width">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Тип</th>
+                            <th>Откуда</th>
+                            <th>Куда</th>
+                            <th>Время вылета</th>
+                            <th>Время посадки</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="pure-table-odd">
+                            <td>1</td>
+                            <td>Broiler 747</td>
+                            <td>Москва</td>
+                            <td>Екатеринбург</td>
+                            <td>0000000</td>
+                            <td>0000000</td>
+                            <td>Вылетел</td>
+                        </tr>                  
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="addPanel">
+                <form class="pure-form pure-form-stacked">
+                    <fieldset>
+                        <legend>Создать</legend>
+
+                        <div class="pure-g">
+                            <div class="pure-u-5-24">
+                                <label for="airline_number">Номер рейса:</label>
+                                <input id="airline_number" class="pure-u-23-24" type="text">
+                            </div>
+                            <div class="pure-u-6-24">
+                                <label for="airline_number">Тип самолета:</label>
+                                <input id="airline_number" class="pure-u-23-24" type="text">
+                            </div>
+                            <div class="pure-u-4-24">
+                                <label for="from_city">Город отправления</label>
+                                <select id="from_city" class="pure-u-23-24">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="pure-u-4-24">
+                                <label for="to_city">Город прибытия</label>
+                                <select id="to_city" class="pure-u-23-24">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="pure-u-5-24">
+                                <label for="state">Статус</label>
+                                <select id="state" class="pure-input-1-2">
+                                    <option>задержан</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                            <div class="pure-u-3-24">
+                                <button class="button-large pure-button">Создать</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <legend></legend>
+                <form class="pure-form">
+                    <fieldset>
+                        <div class="pure-g">
+                            <div class="pure-u-1-2">
+                                <legend>Город</legend>
+                                <div class="pure-g">
+                                    <div class="pure-u-1-2">
+                                        <input id="airline_number" type="text" class="pure-u-23-24">
+                                        <button class="button-large pure-button">Создать</button>
+                                    </div>
+                                    <div class="pure-u-1-2">
+                                        <select id="state" class="pure-u-23-24">
+                                            <option>задержан</option>
+                                            <option>2</option>
+                                        </select>
+                                        <button class="button-large pure-button">Удалить</button>  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pure-u-1-2">
+                                <legend>Статус</legend>
+                                <div class="pure-g">
+                                    <div class="pure-u-1-2">
+                                        <input id="airline_number" type="text" class="pure-u-23-24">
+                                        <button class="button-large pure-button">Создать</button>
+                                    </div>
+                                    <div class="pure-u-1-2">
+                                        <select id="state" class="pure-u-23-24">
+                                            <option>задержан</option>
+                                            <option>2</option>
+                                        </select>
+                                        <button class="button-large pure-button">Удалить</button>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+        </div>
+        <div class="text-center footer">
+            <span>Автор: <a href="https://github.com/Suhoy95">Сухоплюев Илья</a></span><br>
+            <span>Репозиторий: <a href="https://github.com/Suhoy95">посмотреть на github.com</a></span>
+        </div>
         <script type="text/javascript" src="build.js"></script>
     </body>
 </html>
