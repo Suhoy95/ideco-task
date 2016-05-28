@@ -7,7 +7,7 @@ var app = express();
 
 var city = require('./handlers/city');
 var state = require('./handlers/state');
-var airline = require('./handlers/airline');
+// var airline = require('./handlers/airline');
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
@@ -23,9 +23,8 @@ app.use('/api/state', state);
 //app.use('/api/airline', airline);
 
 
-app.use(function(err, req, res) {
-    res.status(err.status || 500);
-    res.send(err);
+app.use(function(req, res) {
+    res.sendStatus(404);
 });
 
 var port = process.env.PORT || 8080;

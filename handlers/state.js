@@ -7,12 +7,13 @@ var router = express.Router();
 
 var STATES_FILE = './database/states.json';
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     fs.readFile(STATES_FILE, fileHasRead);
 
     function fileHasRead(err, data) {
         if(err){
-            next(err);
+            console.log(err);
+            res.sendStatus(500);
             return;
         }
 
@@ -20,13 +21,12 @@ router.get('/', function(req, res, next) {
     }
 });
 
-router.post('/', function(req, res, next) {
+router.post('/', function(req, res) {
     var state = req.body && req.body.state;
 
     if(state === undefined ){
-        var err = new Error('Bad state');
-        err.status = 400;
-        next(err);
+        console.log(new Error('Bad state'));
+        res.sendStatus(400);
         return;
     }
   
@@ -35,7 +35,8 @@ router.post('/', function(req, res, next) {
 
     function addNewState(err, data) {
         if(err){
-            next(err);
+            console.log(err);
+            res.sendStatus(500);
             return;
         }
     
@@ -47,7 +48,8 @@ router.post('/', function(req, res, next) {
 
     function fileHasSaved(err) {
         if(err){
-            next(err);
+            console.log(err);
+            res.sendStatus(500);
             return;
         }
     
@@ -55,13 +57,12 @@ router.post('/', function(req, res, next) {
     }
 });
 
-router.delete('/', function(req, res, next) {
+router.delete('/', function(req, res) {
     var state = req.body && req.body.state;
 
     if(state === undefined ){
-        var err = new Error('Bad state');
-        err.status = 400;
-        next(err);
+        console.log(new Error('Bad state'));
+        res.sendStatus(400);
         return;
     }
   
@@ -70,7 +71,8 @@ router.delete('/', function(req, res, next) {
 
     function addNewState(err, data) {
         if(err){
-            next(err);
+            console.log(err);
+            res.sendStatus(500);
             return;
         }
     
@@ -81,7 +83,8 @@ router.delete('/', function(req, res, next) {
 
     function fileHasSaved(err) {
         if(err){
-            next(err);
+            console.log(err);
+            res.sendStatus(500);
             return;
         }
     
