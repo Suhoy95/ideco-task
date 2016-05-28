@@ -1,35 +1,34 @@
 var React = require('react');
 
-var AirlineTable = React.createClass({
-  render: function() {
-    return (
-     <div className="airlineTable">
-        <table className="pure-table full-width">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Тип</th>
-                    <th>Откуда</th>
-                    <th>Куда</th>
-                    <th>Время вылета</th>
-                    <th>Время посадки</th>
-                    <th>Статус</th>
-                </tr>
-            </thead>
+var AirlineView = require('./airlinetable/airlineview.jsx')
 
-            <tbody>
-                <tr className="pure-table-odd">
-                    <td>1</td>
-                    <td>Broiler 747</td>
-                    <td>Москва</td>
-                    <td>Екатеринбург</td>
-                    <td>0000000</td>
-                    <td>0000000</td>
-                    <td>Вылетел</td>
-                </tr>                  
-            </tbody>
-        </table>
-    </div>);
+var AirlineTable = React.createClass({
+    render: function() {
+        var airlines = this.props.airlines.map(toAirline);
+        return (
+         <div className="airlineTable">
+            <table className="pure-table full-width">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Тип</th>
+                        <th>Откуда</th>
+                        <th>Куда</th>
+                        <th>Время вылета</th>
+                        <th>Время посадки</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {airlines}
+                </tbody>
+            </table>
+        </div>);
+
+    function toAirline(data){
+        return (<AirlineView airline={data} />);
+    }
   }
 });
 

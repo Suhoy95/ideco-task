@@ -8,5 +8,15 @@
         "startTime": "1234",
         "endTime": "1234",
         "state": "приземлился"
+    },
+    {
+        "id": 1464476903579,
+        "number": "002",
+        "planeType": "asdf",
+        "fromCity": "Санкт-Петербург",
+        "toCity": "Новосибирск",
+        "startTime": "asdfg",
+        "endTime": "asd",
+        "state": "вылетел"
     }
 ]

@@ -19,8 +19,19 @@ var AirlineApplication = React.createClass({
     componentDidMount: function() {
         this.loadCities();
         this.loadStates();
+        this.loadAirline()
     },
 
+    loadAirline: function(){
+        var self = this;
+        $.get('/api/airline')
+         .success(function(data){
+            self.setState({airlines: data});
+         })
+         .error(function(err){
+            console.log(err);
+         });
+    },
     addAirline: function(airline){
         var self = this;    
         $.post('/api/airline', {airline: airline})
@@ -126,7 +137,7 @@ var AirlineApplication = React.createClass({
             <ControlPanel onSwitchMode={this.switchMode}
                           cities={this.state.cities}
                           states={this.state.states}/>
-            <AirlineTable />
+            <AirlineTable airlines={this.state.airlines}/>
 
             {this.state.isEdition ? 
                 <AddPanel onAddAirline={this.addAirline}
