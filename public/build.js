@@ -123,6 +123,22 @@
 	            console.log(err);
 	        });
 	    },
+	    deleteState: function deleteState(state) {
+	        if (state === '...') return;
+
+	        var self = this;
+	        $.ajax({
+	            type: "DELETE",
+	            url: '/api/state',
+	            data: { state: state },
+	            success: function success(data) {
+	                self.setState({ states: data });
+	            },
+	            error: function error(xhr, status, err) {
+	                console.log(err);
+	            }
+	        });
+	    },
 
 	    switchMode: function switchMode() {
 	        var isEdition = !this.state.isEdition;
@@ -143,7 +159,8 @@
 	                onDeleteCity: this.deleteCity,
 
 	                states: this.state.states,
-	                onAddState: this.addState
+	                onAddState: this.addState,
+	                onDeleteState: this.deleteState
 	            }) : null
 	        );
 	    }
@@ -30590,7 +30607,8 @@
 	                    'div',
 	                    { className: 'pure-u-1-2' },
 	                    React.createElement(EditState, { states: this.props.states,
-	                        onAddState: this.props.onAddState })
+	                        onAddState: this.props.onAddState,
+	                        onDeleteState: this.props.onDeleteState })
 	                )
 	            )
 	        );
@@ -30862,7 +30880,8 @@
 	                    'div',
 	                    { className: 'pure-g' },
 	                    React.createElement(AddState, { onAddState: this.props.onAddState }),
-	                    React.createElement(DeleteState, { states: this.props.states })
+	                    React.createElement(DeleteState, { states: this.props.states,
+	                        onDeleteState: this.props.onDeleteState })
 	                )
 	            )
 	        );
@@ -30994,26 +31013,48 @@
 /* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
 
 	var AddState = React.createClass({
-	    displayName: "AddState",
+	    displayName: 'AddState',
 
+	    getInitialState: function getInitialState() {
+	        return {
+	            state: ""
+	        };
+	    },
+
+	    onAddState: function onAddState(e) {
+	        var newState = this.state.state;
+	        if (newState === '') return;
+
+	        this.props.onAddState(newState);
+	        this.setState({ state: '' });
+	        e.preventDefault();
+	    },
+
+	    onStateChange: function onStateChange(e) {
+	        this.setState({ state: e.target.value });
+	    },
 	    render: function render() {
 	        return React.createElement(
-	            "div",
-	            { className: "pure-u-1-2 addState" },
+	            'div',
+	            { className: 'pure-u-1-2 addState' },
 	            React.createElement(
-	                "p",
+	                'p',
 	                null,
-	                React.createElement("input", { id: "airline_number", type: "text", className: "pure-u-23-24" })
+	                React.createElement('input', { id: 'airline_number', type: 'text',
+	                    className: 'pure-u-23-24',
+	                    onChange: this.onStateChange,
+	                    value: this.state.state })
 	            ),
 	            React.createElement(
-	                "button",
-	                { className: "button-large pure-button" },
-	                "Создать"
+	                'button',
+	                { className: 'button-large pure-button',
+	                    onClick: this.onAddState },
+	                'Создать'
 	            )
 	        );
 	    }
@@ -31025,38 +31066,59 @@
 /* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
 
 	var DeleteState = React.createClass({
-	    displayName: "DeleteState",
+	    displayName: 'DeleteState',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            state: ""
+	        };
+	    },
+
+	    onDeleteState: function onDeleteState(e) {
+	        var deleteState = this.state.state;
+	        if (deleteState === '') return;
+
+	        this.setState({ state: '...' });
+	        this.props.onDeleteState(deleteState);
+	        e.preventDefault();
+	    },
+
+	    onStateChange: function onStateChange(e) {
+	        this.setState({ state: e.target.value });
+	    },
 
 	    render: function render() {
-	        var cityOptions = this.props.states.map(toOption);
+	        var stateOptions = this.props.states.map(toOption);
 
 	        return React.createElement(
-	            "div",
-	            { className: "pure-u-1-2 deleteState" },
+	            'div',
+	            { className: 'pure-u-1-2 deleteState' },
 	            React.createElement(
-	                "p",
+	                'p',
 	                null,
 	                React.createElement(
-	                    "select",
-	                    { id: "state", className: "pure-u-23-24" },
-	                    cityOptions
+	                    'select',
+	                    { id: 'state', className: 'pure-u-23-24',
+	                        onChange: this.onStateChange },
+	                    stateOptions
 	                )
 	            ),
 	            React.createElement(
-	                "button",
-	                { className: "button-large pure-button" },
-	                "Удалить"
+	                'button',
+	                { className: 'button-large pure-button',
+	                    onClick: this.onDeleteState },
+	                'Удалить'
 	            )
 	        );
 
 	        function toOption(state) {
 	            return React.createElement(
-	                "option",
+	                'option',
 	                { value: state },
 	                state
 	            );

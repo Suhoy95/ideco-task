@@ -22,7 +22,8 @@ var AddPanel = React.createClass({
             </div>
             <div className="pure-u-1-2">
                 <EditState states={this.props.states}
-                           onAddState={this.props.onAddState} />
+                           onAddState={this.props.onAddState}
+                           onDeleteState={this.props.onDeleteState} />
             </div>
         </div>
     </div>);

@@ -11,7 +11,8 @@ var EditState = React.createClass({
                 <legend>Статус</legend>
                 <div className="pure-g">
                     <AddState onAddState={this.props.onAddState}/>
-                    <DeleteState states={this.props.states}/>
+                    <DeleteState states={this.props.states}
+                                 onDeleteState={this.props.onDeleteState}/>
                 </div>
             </fieldset>
         </form>);

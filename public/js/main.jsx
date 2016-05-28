@@ -84,6 +84,23 @@ var AirlineApplication = React.createClass({
             console.log(err);
          });
     },
+    deleteState: function(state){
+        if(state === '...')
+            return;
+
+        var self = this;   
+        $.ajax({
+            type: "DELETE",
+            url: '/api/state',
+            data: {state:state},
+            success: function(data){
+                self.setState({states: data});
+            },
+            error: function(xhr, status, err){
+              console.log(err);
+            }
+        });
+    },
 
     switchMode: function(){
         var isEdition = !this.state.isEdition;
@@ -106,6 +123,7 @@ var AirlineApplication = React.createClass({
 
                           states={this.state.states}
                           onAddState={this.addState}
+                          onDeleteState={this.deleteState} 
                            /> 
                 : null}
         </div>);
