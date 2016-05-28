@@ -9,33 +9,81 @@ var AddPanel = require('./addpanel.jsx');
 var AirlineApplication = React.createClass({
     getInitialState: function() {
         return { 
-            isEdition: false,
+            isEdition: true,
             cities: [],
             states: []
         };
     },
 
     componentDidMount: function() {
+        this.loadCities();
+        this.loadStates();
+    },
+
+    loadCities: function(){
         var self = this;
         $.get('/api/city')
          .success(function(data){
-            console.log(data);
             self.setState({cities: data});
          })
          .error(function(err){
             console.log(err);
          });
+    },
+    addCity: function(city){
+        if(city === '...')
+            return;
 
-         $.get('/api/state')
+        var self = this;    
+        $.post('/api/city', {city: city})
          .success(function(data){
-            console.log(data);
+            self.setState({cities: data});
+         })
+         .error(function(err){
+            console.log(err);
+         });
+    },
+    deleteCity: function(city){
+        if(city === '...')
+            return;
+
+        var self = this;   
+        $.ajax({
+            type: "DELETE",
+            url: '/api/city',
+            data: {city:city},
+            success: function(data){
+                self.setState({cities: data});
+            },
+            error: function(xhr, status, err){
+              console.log(err);
+            }
+        });
+    },
+
+    loadStates: function(){
+        var self = this;
+        $.get('/api/state')
+         .success(function(data){
             self.setState({states: data});
          })
          .error(function(err){
             console.log(err);
          });
     },
+    addState: function(state){
+        if(state === '...')
+            return;
 
+        var self = this;
+        $.post('/api/state', {state: state})
+         .success(function(data){
+            self.setState({states: data});
+         })
+         .error(function(err){
+            console.log(err);
+         });
+    },
 
     switchMode: function(){
         var isEdition = !this.state.isEdition;
@@ -51,7 +99,15 @@ var AirlineApplication = React.createClass({
                           states={this.state.states}/>
             <AirlineTable />
 
-            {this.state.isEdition ? <AddPanel /> : null}
+            {this.state.isEdition ? 
+                <AddPanel cities={this.state.cities}
+                          onAddCity={this.addCity}
+                          onDeleteCity={this.deleteCity}
+
+                          states={this.state.states}
+                          onAddState={this.addState}
+                           /> 
+                : null}
         </div>);
     }
 });
