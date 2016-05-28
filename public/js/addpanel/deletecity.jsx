@@ -27,7 +27,7 @@ var DeleteCity = React.createClass({
         return (
         <div className="pure-u-1-2 deleteCity">
             <p>
-                <select id="state" className="pure-u-23-24" onChange={this.onCityChange}>
+                <select className="pure-u-23-24" onChange={this.onCityChange}>
                     {cityOptions}
                 </select>
             </p>

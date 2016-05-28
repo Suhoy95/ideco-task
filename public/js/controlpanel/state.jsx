@@ -6,8 +6,8 @@ var State = React.createClass({
 
     return (   
     <div className="pure-u-5-24 state">
-        <label for="state">Статус</label>
-        <select id="state" className="pure-input-1-2">
+        <label>Статус</label>
+        <select className="pure-input-1-2">
             {stateOptions}
         </select>
     </div>);

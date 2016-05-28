@@ -6,8 +6,10 @@ var State = React.createClass({
 
     return (   
     <div className="pure-u-5-24 state">
-        <label for="add_state">Статус</label>
-        <select id="add_state" className="pure-u-23-24">
+        <label>Статус</label>
+        <select className="pure-u-23-24" 
+                onChange={this.props.onStateChange}
+                value={this.props.value}>
             {stateOptions}
         </select>
     </div>);

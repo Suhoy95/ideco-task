@@ -7,8 +7,10 @@ var FromCity = React.createClass({
 
         return (
         <div className="pure-u-4-24 fromCity">
-            <label for="add_from_city">Город отправления</label>
-            <select id="add_from_city" className="pure-u-23-24">
+            <label>Город отправления</label>
+            <select className="pure-u-23-24" 
+                    onChange={this.props.onFromCityChange}
+                    value={this.props.value}>
                 {cityOptions}
             </select>
         </div>);

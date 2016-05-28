@@ -27,7 +27,7 @@ var DeleteState = React.createClass({
         return (
         <div className="pure-u-1-2 deleteState">
             <p>
-                <select id="state" className="pure-u-23-24" 
+                <select className="pure-u-23-24" 
                         onChange={this.onStateChange}>
                     {stateOptions}
                 </select>

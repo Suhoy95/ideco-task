@@ -25,7 +25,7 @@ var AddCity = React.createClass({
         return (
         <div className="pure-u-1-2 addCity">
             <p>
-                <input id="airline_number" type="text" 
+                <input type="text" 
                        className="pure-u-23-24" 
                        onChange={this.onCityChange}
                        value={this.state.city}/>

@@ -60,6 +60,7 @@
 	    getInitialState: function getInitialState() {
 	        return {
 	            isEdition: true,
+	            airlines: [],
 	            cities: [],
 	            states: []
 	        };
@@ -68,6 +69,15 @@
 	    componentDidMount: function componentDidMount() {
 	        this.loadCities();
 	        this.loadStates();
+	    },
+
+	    addAirline: function addAirline(airline) {
+	        var self = this;
+	        $.post('/api/airline', { airline: airline }).success(function (data) {
+	            self.setState({ airlines: data });
+	        }).error(function (err) {
+	            console.log(err);
+	        });
 	    },
 
 	    loadCities: function loadCities() {
@@ -154,7 +164,9 @@
 	                cities: this.state.cities,
 	                states: this.state.states }),
 	            React.createElement(AirlineTable, null),
-	            this.state.isEdition ? React.createElement(AddPanel, { cities: this.state.cities,
+	            this.state.isEdition ? React.createElement(AddPanel, { onAddAirline: this.addAirline,
+
+	                cities: this.state.cities,
 	                onAddCity: this.addCity,
 	                onDeleteCity: this.deleteCity,
 
@@ -30304,7 +30316,7 @@
 	                    ),
 	                    React.createElement(
 	                        'div',
-	                        { classNameName: 'pure-g' },
+	                        { className: 'pure-g' },
 	                        React.createElement(FromCity, { cities: this.props.cities }),
 	                        React.createElement(ToCity, { cities: this.props.cities }),
 	                        React.createElement(State, { states: this.props.states }),
@@ -30355,12 +30367,12 @@
 	            { className: "pure-u-6-24 fromCity" },
 	            React.createElement(
 	                "label",
-	                { "for": "from_city" },
+	                null,
 	                "Город отправления"
 	            ),
 	            React.createElement(
 	                "select",
-	                { id: "from_city", className: "pure-input-1-2" },
+	                { className: "pure-input-1-2" },
 	                cityOptions
 	            )
 	        );
@@ -30396,12 +30408,12 @@
 	            { className: "pure-u-6-24 toCity" },
 	            React.createElement(
 	                "label",
-	                { "for": "to_city" },
+	                null,
 	                "Город прибытия"
 	            ),
 	            React.createElement(
 	                "select",
-	                { id: "to_city", className: "pure-input-1-2" },
+	                { className: "pure-input-1-2" },
 	                cityOptions
 	            )
 	        );
@@ -30437,12 +30449,12 @@
 	            { className: "pure-u-5-24 state" },
 	            React.createElement(
 	                "label",
-	                { "for": "state" },
+	                null,
 	                "Статус"
 	            ),
 	            React.createElement(
 	                "select",
-	                { id: "state", className: "pure-input-1-2" },
+	                { className: "pure-input-1-2" },
 	                stateOptions
 	            )
 	        );
@@ -30590,7 +30602,8 @@
 	            'div',
 	            { className: 'addPanel' },
 	            React.createElement(AddAirline, { cities: this.props.cities,
-	                states: this.props.states }),
+	                states: this.props.states,
+	                onAddAirline: this.props.onAddAirline }),
 	            React.createElement('legend', null),
 	            React.createElement(
 	                'div',
@@ -30636,12 +30649,14 @@
 	            { className: "pure-u-4-24 fromCity" },
 	            React.createElement(
 	                "label",
-	                { "for": "add_from_city" },
+	                null,
 	                "Город отправления"
 	            ),
 	            React.createElement(
 	                "select",
-	                { id: "add_from_city", className: "pure-u-23-24" },
+	                { className: "pure-u-23-24",
+	                    onChange: this.props.onFromCityChange,
+	                    value: this.props.value },
 	                cityOptions
 	            )
 	        );
@@ -30677,12 +30692,14 @@
 	            { className: "pure-u-4-24 toCity" },
 	            React.createElement(
 	                "label",
-	                { "for": "add_to_city" },
+	                null,
 	                "Город прибытия"
 	            ),
 	            React.createElement(
 	                "select",
-	                { id: "add_to_city", className: "pure-u-23-24" },
+	                { className: "pure-u-23-24",
+	                    onChange: this.props.onToCityChange,
+	                    value: this.props.value },
 	                cityOptions
 	            )
 	        );
@@ -30718,12 +30735,14 @@
 	            { className: "pure-u-5-24 state" },
 	            React.createElement(
 	                "label",
-	                { "for": "add_state" },
+	                null,
 	                "Статус"
 	            ),
 	            React.createElement(
 	                "select",
-	                { id: "add_state", className: "pure-u-23-24" },
+	                { className: "pure-u-23-24",
+	                    onChange: this.props.onStateChange,
+	                    value: this.props.value },
 	                stateOptions
 	            )
 	        );
@@ -30752,8 +30771,75 @@
 	var ToCity = __webpack_require__(176);
 	var State = __webpack_require__(177);
 
+	var initAirline = {
+	    number: "",
+	    planeType: "",
+	    fromCity: "...",
+	    toCity: "...",
+	    startTime: "",
+	    endTime: "",
+	    state: "..."
+	};
+
 	var AddAirline = React.createClass({
 	    displayName: 'AddAirline',
+
+	    getInitialState: function getInitialState() {
+	        return Object.create(initAirline);
+	    },
+
+	    onAddAirline: function onAddAirline(e) {
+	        var state = this.state;
+
+	        this.props.onAddAirline({
+	            number: state.number,
+	            planeType: state.planeType,
+	            fromCity: state.fromCity,
+	            toCity: state.toCity,
+	            startTime: state.startTime,
+	            endTime: state.endTime,
+	            state: state.state
+	        });
+
+	        this.setState({
+	            number: "",
+	            planeType: "",
+	            fromCity: "...",
+	            toCity: "...",
+	            startTime: "",
+	            endTime: "",
+	            state: "..."
+	        });
+	        e.preventDefault();
+	    },
+
+	    onNumperChange: function onNumperChange(e) {
+	        this.setState({ number: e.target.value });
+	    },
+
+	    onPlaneTypeChange: function onPlaneTypeChange(e) {
+	        this.setState({ planeType: e.target.value });
+	    },
+
+	    onFromCityChange: function onFromCityChange(e) {
+	        this.setState({ fromCity: e.target.value });
+	    },
+
+	    onToCityChange: function onToCityChange(e) {
+	        this.setState({ toCity: e.target.value });
+	    },
+
+	    onStateChange: function onStateChange(e) {
+	        this.setState({ state: e.target.value });
+	    },
+
+	    onStartTimeChange: function onStartTimeChange(e) {
+	        this.setState({ startTime: e.target.value });
+	    },
+
+	    onEndTimeChange: function onEndTimeChange(e) {
+	        this.setState({ endTime: e.target.value });
+	    },
 
 	    render: function render() {
 	        return React.createElement(
@@ -30775,30 +30861,66 @@
 	                        { className: 'pure-u-5-24' },
 	                        React.createElement(
 	                            'label',
-	                            { 'for': 'airline_number' },
+	                            null,
 	                            'Номер рейса:'
 	                        ),
-	                        React.createElement('input', { id: 'airline_number', className: 'pure-u-23-24', type: 'text' })
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onNumperChange,
+	                            value: this.state.number })
 	                    ),
 	                    React.createElement(
 	                        'div',
 	                        { className: 'pure-u-6-24' },
 	                        React.createElement(
 	                            'label',
-	                            { 'for': 'airline_number' },
+	                            null,
 	                            'Тип самолета:'
 	                        ),
-	                        React.createElement('input', { id: 'airline_number', className: 'pure-u-23-24', type: 'text' })
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onPlaneTypeChange,
+	                            value: this.state.planeType })
 	                    ),
-	                    React.createElement(FromCity, { cities: this.props.cities }),
-	                    React.createElement(ToCity, { cities: this.props.cities }),
-	                    React.createElement(State, { states: this.props.states }),
+	                    React.createElement(FromCity, { cities: this.props.cities,
+	                        onFromCityChange: this.onFromCityChange,
+	                        value: this.state.fromCity }),
+	                    React.createElement(ToCity, { cities: this.props.cities,
+	                        onToCityChange: this.onToCityChange,
+	                        value: this.state.toCity }),
+	                    React.createElement(State, { states: this.props.states,
+	                        onStateChange: this.onStateChange,
+	                        value: this.state.state }),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-5-24' },
+	                        React.createElement(
+	                            'label',
+	                            null,
+	                            'Время вылет:'
+	                        ),
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onStartTimeChange,
+	                            value: this.state.startTime })
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-6-24' },
+	                        React.createElement(
+	                            'label',
+	                            null,
+	                            'Время посадки:'
+	                        ),
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onEndTimeChange,
+	                            value: this.state.endTime })
+	                    ),
 	                    React.createElement(
 	                        'div',
 	                        { className: 'pure-u-3-24' },
+	                        React.createElement('br', null),
 	                        React.createElement(
 	                            'button',
-	                            { className: 'button-large pure-button' },
+	                            { className: 'button-large pure-button',
+	                                onClick: this.onAddAirline },
 	                            'Создать'
 	                        )
 	                    )
@@ -30927,7 +31049,7 @@
 	            React.createElement(
 	                'p',
 	                null,
-	                React.createElement('input', { id: 'airline_number', type: 'text',
+	                React.createElement('input', { type: 'text',
 	                    className: 'pure-u-23-24',
 	                    onChange: this.onCityChange,
 	                    value: this.state.city })
@@ -30985,7 +31107,7 @@
 	                null,
 	                React.createElement(
 	                    'select',
-	                    { id: 'state', className: 'pure-u-23-24', onChange: this.onCityChange },
+	                    { className: 'pure-u-23-24', onChange: this.onCityChange },
 	                    cityOptions
 	                )
 	            ),
@@ -31045,7 +31167,7 @@
 	            React.createElement(
 	                'p',
 	                null,
-	                React.createElement('input', { id: 'airline_number', type: 'text',
+	                React.createElement('input', { type: 'text',
 	                    className: 'pure-u-23-24',
 	                    onChange: this.onStateChange,
 	                    value: this.state.state })
@@ -31103,7 +31225,7 @@
 	                null,
 	                React.createElement(
 	                    'select',
-	                    { id: 'state', className: 'pure-u-23-24',
+	                    { className: 'pure-u-23-24',
 	                        onChange: this.onStateChange },
 	                    stateOptions
 	                )

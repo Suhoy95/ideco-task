@@ -10,7 +10,8 @@ var AddPanel = React.createClass({
     return (
     <div className="addPanel">
         <AddAirline cities={this.props.cities}
-                    states={this.props.states}/>
+                    states={this.props.states}
+                    onAddAirline={this.props.onAddAirline}/>
 
         <legend></legend>
         <div className="pure-g">

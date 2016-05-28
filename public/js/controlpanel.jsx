@@ -23,7 +23,7 @@ var ControlPanel = React.createClass({
         <form className="pure-form">
         <fieldset>
             <legend><h1>Авиарейсы</h1></legend>
-            <div classNameName="pure-g">
+            <div className="pure-g">
 
                 <FromCity cities={this.props.cities}/>
                 <ToCity cities={this.props.cities} />

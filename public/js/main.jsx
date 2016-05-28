@@ -10,6 +10,7 @@ var AirlineApplication = React.createClass({
     getInitialState: function() {
         return { 
             isEdition: true,
+            airlines: [],
             cities: [],
             states: []
         };
@@ -18,6 +19,17 @@ var AirlineApplication = React.createClass({
     componentDidMount: function() {
         this.loadCities();
         this.loadStates();
+    },
+
+    addAirline: function(airline){
+        var self = this;    
+        $.post('/api/airline', {airline: airline})
+         .success(function(data){
+            self.setState({airlines: data});
+         })
+         .error(function(err){
+            console.log(err);
+         });
     },
 
     loadCities: function(){
@@ -117,7 +129,9 @@ var AirlineApplication = React.createClass({
             <AirlineTable />
 
             {this.state.isEdition ? 
-                <AddPanel cities={this.state.cities}
+                <AddPanel onAddAirline={this.addAirline}
+
+                          cities={this.state.cities}
                           onAddCity={this.addCity}
                           onDeleteCity={this.deleteCity}
 

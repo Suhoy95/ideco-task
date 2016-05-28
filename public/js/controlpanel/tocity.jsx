@@ -6,8 +6,8 @@ var ToCity = React.createClass({
 
         return (
         <div className="pure-u-6-24 toCity">
-            <label for="to_city">Город прибытия</label>
-            <select id="to_city" className="pure-input-1-2">
+            <label>Город прибытия</label>
+            <select className="pure-input-1-2">
                 {cityOptions}
             </select>
         </div>);
