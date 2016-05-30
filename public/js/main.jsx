@@ -12,6 +12,7 @@ var AirlineApplication = React.createClass({
         return { 
             isEdition: false,
             amountAirlines: 0,
+            filters: {},
             airlines: [],
             cities: [],
             states: []
@@ -19,10 +20,14 @@ var AirlineApplication = React.createClass({
     },
 
     componentDidMount: function() {
-        this.loadCities();
-        this.loadStates();
-        this.loadAirlines();
-        this.loadAmountAirlines();
+        this.refresh();
+    },
+
+    refresh: function(){
+      this.loadCities();
+      this.loadStates();
+      this.loadAirlines(this.state.filters);
+      this.loadAmountAirlines();
     },
 
     loadAmountAirlines: function(){
@@ -35,9 +40,9 @@ var AirlineApplication = React.createClass({
 
     loadAirlines: function(filters){
         var self = this;
+        this.setState({filters: filters});
         $.get('/api/airline', filters)
          .success(function(data){
-            self.setState({isEdition: false});
             self.setState({airlines: data});
          });
     },
@@ -64,7 +69,7 @@ var AirlineApplication = React.createClass({
             url: '/api/airline',
             data: {id: id},
             success: function(data){
-                var newAirlines = _.filter(this.state.airlines, function(airline){
+                var newAirlines = _.filter(self.state.airlines, function(airline){
                                                                     return airline.id != id;
                                                                 });
                 self.setState({airlines: newAirlines});
@@ -160,6 +165,9 @@ var AirlineApplication = React.createClass({
                           onDeleteState={this.deleteState} 
                           /> 
                 : null}
+            <p>
+              <button className="pure-button" onClick={this.refresh}>Обновить</button>
+            </p>
         </div>);
     }
 });

@@ -62,6 +62,7 @@
 	        return {
 	            isEdition: false,
 	            amountAirlines: 0,
+	            filters: {},
 	            airlines: [],
 	            cities: [],
 	            states: []
@@ -69,9 +70,13 @@
 	    },
 
 	    componentDidMount: function componentDidMount() {
+	        this.refresh();
+	    },
+
+	    refresh: function refresh() {
 	        this.loadCities();
 	        this.loadStates();
-	        this.loadAirlines();
+	        this.loadAirlines(this.state.filters);
 	        this.loadAmountAirlines();
 	    },
 
@@ -84,8 +89,8 @@
 
 	    loadAirlines: function loadAirlines(filters) {
 	        var self = this;
+	        this.setState({ filters: filters });
 	        $.get('/api/airline', filters).success(function (data) {
-	            self.setState({ isEdition: false });
 	            self.setState({ airlines: data });
 	        });
 	    },
@@ -111,7 +116,7 @@
 	            url: '/api/airline',
 	            data: { id: id },
 	            success: function success(data) {
-	                var newAirlines = _.filter(this.state.airlines, function (airline) {
+	                var newAirlines = _.filter(self.state.airlines, function (airline) {
 	                    return airline.id != id;
 	                });
 	                self.setState({ airlines: newAirlines });
@@ -199,7 +204,16 @@
 	                states: this.state.states,
 	                onAddState: this.addState,
 	                onDeleteState: this.deleteState
-	            }) : null
+	            }) : null,
+	            React.createElement(
+	                'p',
+	                null,
+	                React.createElement(
+	                    'button',
+	                    { className: 'pure-button', onClick: this.refresh },
+	                    'Обновить'
+	                )
+	            )
 	        );
 	    }
 	});
@@ -30555,7 +30569,6 @@
 	var React = __webpack_require__(1);
 
 	var AirlineView = __webpack_require__(174);
-	var ShowAirline = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./airlinetable/showairline.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	var EditionAirline = __webpack_require__(176);
 
 	var AirlineTable = React.createClass({

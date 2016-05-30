@@ -1,7 +1,6 @@
 var React = require('react');
 
 var AirlineView = require('./airlinetable/airlineview.jsx');
-var ShowAirline = require('./airlinetable/showairline.jsx');
 var EditionAirline = require('./airlinetable/editionairline.jsx');
 
 
