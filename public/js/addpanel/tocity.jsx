@@ -10,6 +10,7 @@ var ToCity = React.createClass({
             <select className="pure-u-23-24" 
                     onChange={this.props.onToCityChange}
                     value={this.props.value}>
+                <option value="...">...</option>
                 {cityOptions}
             </select>
         </div>);

@@ -7,6 +7,12 @@ var AIRLINES_FILE = './database/airlines.json';
 var Airline = require('../model/airline');
 
 router.get('/', function(req, res) {
+    var filters = {
+        fromCity: req.query && req.query.fromCity,
+        toCity: req.query && req.query.toCity,
+        state: req.query && req.query.state
+    };
+
     fs.readFile(AIRLINES_FILE, fileHasRead);
 
     function fileHasRead(err, data) {
@@ -16,7 +22,32 @@ router.get('/', function(req, res) {
             return;
         }
 
-        res.json(JSON.parse(data));
+        var airlines = JSON.parse(data);
+        var selection = _.filter(airlines, isRequiredAirline);
+
+        res.json(selection);
+    }
+
+    function isRequiredAirline(airline){
+        for(var parameter in filters)
+            if(filters[parameter] && filters[parameter] != airline[parameter])
+                return false;
+
+        return true;
+    }
+});
+
+router.get('/amount', function(req, res) {
+    fs.readFile(AIRLINES_FILE, fileHasRead);
+
+    function fileHasRead(err, data) {
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        var amount = JSON.parse(data).length;
+        res.json({amount: amount});
     }
 });
 

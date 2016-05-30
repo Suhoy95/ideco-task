@@ -9,7 +9,8 @@ var AddPanel = require('./addpanel.jsx');
 var AirlineApplication = React.createClass({
     getInitialState: function() {
         return { 
-            isEdition: true,
+            isEdition: false,
+            amountAirlines: 0,
             airlines: [],
             cities: [],
             states: []
@@ -19,17 +20,24 @@ var AirlineApplication = React.createClass({
     componentDidMount: function() {
         this.loadCities();
         this.loadStates();
-        this.loadAirline()
+        this.loadAirlines();
+        this.loadAmountAirlines();
     },
 
-    loadAirline: function(){
+    loadAmountAirlines: function(){
         var self = this;
-        $.get('/api/airline')
+        $.get('/api/airline/amount')
+         .success(function(data){
+            self.setState({amountAirlines: data.amount});
+         });
+    },
+
+    loadAirlines: function(filters){
+        console.log(filters);
+        var self = this;
+        $.get('/api/airline', filters)
          .success(function(data){
             self.setState({airlines: data});
-         })
-         .error(function(err){
-            console.log(err);
          });
     },
     addAirline: function(airline){
@@ -37,9 +45,7 @@ var AirlineApplication = React.createClass({
         $.post('/api/airline', {airline: airline})
          .success(function(data){
             self.setState({airlines: data});
-         })
-         .error(function(err){
-            console.log(err);
+            self.loadAmountAirlines();
          });
     },
 
@@ -48,28 +54,16 @@ var AirlineApplication = React.createClass({
         $.get('/api/city')
          .success(function(data){
             self.setState({cities: data});
-         })
-         .error(function(err){
-            console.log(err);
          });
     },
     addCity: function(city){
-        if(city === '...')
-            return;
-
         var self = this;    
         $.post('/api/city', {city: city})
          .success(function(data){
             self.setState({cities: data});
-         })
-         .error(function(err){
-            console.log(err);
          });
     },
     deleteCity: function(city){
-        if(city === '...')
-            return;
-
         var self = this;   
         $.ajax({
             type: "DELETE",
@@ -77,9 +71,6 @@ var AirlineApplication = React.createClass({
             data: {city:city},
             success: function(data){
                 self.setState({cities: data});
-            },
-            error: function(xhr, status, err){
-              console.log(err);
             }
         });
     },
@@ -89,28 +80,16 @@ var AirlineApplication = React.createClass({
         $.get('/api/state')
          .success(function(data){
             self.setState({states: data});
-         })
-         .error(function(err){
-            console.log(err);
          });
     },
     addState: function(state){
-        if(state === '...')
-            return;
-
         var self = this;
         $.post('/api/state', {state: state})
          .success(function(data){
             self.setState({states: data});
-         })
-         .error(function(err){
-            console.log(err);
          });
     },
     deleteState: function(state){
-        if(state === '...')
-            return;
-
         var self = this;   
         $.ajax({
             type: "DELETE",
@@ -118,9 +97,6 @@ var AirlineApplication = React.createClass({
             data: {state:state},
             success: function(data){
                 self.setState({states: data});
-            },
-            error: function(xhr, status, err){
-              console.log(err);
             }
         });
     },
@@ -134,10 +110,14 @@ var AirlineApplication = React.createClass({
     render: function() {
         return (
         <div className="AirlineApplication">
-            <ControlPanel onSwitchMode={this.switchMode}
+            <ControlPanel onFiltersChange={this.loadAirlines}
+                          onSwitchMode={this.switchMode}
                           cities={this.state.cities}
-                          states={this.state.states}/>
-            <AirlineTable airlines={this.state.airlines}/>
+                          states={this.state.states} 
+                          amountAirlines={this.state.amountAirlines}/>
+            
+            <AirlineTable isEditionTable={this.state.isEdition}
+                          airlines={this.state.airlines}/>
 
             {this.state.isEdition ? 
                 <AddPanel onAddAirline={this.addAirline}

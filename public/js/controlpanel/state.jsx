@@ -1,21 +1,27 @@
 var React = require('react');
 
 var State = React.createClass({
-  render: function() {
-    var stateOptions = this.props.states.map(toOption);
+    onChange: function(e){
+        var state = e.target.value === '...' ? null : e.target.value;
+        this.props.onChange(state);
+    },
 
-    return (   
-    <div className="pure-u-5-24 state">
-        <label>Статус</label>
-        <select className="pure-input-1-2">
-            {stateOptions}
-        </select>
-    </div>);
+    render: function() {
+        var stateOptions = this.props.states.map(toOption);
 
-    function toOption(state){
-            return (<option value={state}>{state}</option>);
-        }
-  }
+        return (   
+        <div className="pure-u-5-24 state">
+            <label>Статус</label>
+            <select className="pure-input-1-2" onChange={this.onChange}>
+                <option value="...">...</option>
+                {stateOptions}
+            </select>
+        </div>);
+
+        function toOption(state){
+                return (<option value={state}>{state}</option>);
+            }
+    }
 });
 
 module.exports = State;

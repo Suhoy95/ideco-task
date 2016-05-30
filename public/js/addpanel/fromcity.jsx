@@ -11,6 +11,7 @@ var FromCity = React.createClass({
             <select className="pure-u-23-24" 
                     onChange={this.props.onFromCityChange}
                     value={this.props.value}>
+                <option value="...">...</option>
                 {cityOptions}
             </select>
         </div>);

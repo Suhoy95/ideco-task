@@ -10,6 +10,7 @@ var State = React.createClass({
         <select className="pure-u-23-24" 
                 onChange={this.props.onStateChange}
                 value={this.props.value}>
+                <option value="...">...</option>
             {stateOptions}
         </select>
     </div>);
