@@ -4,7 +4,6 @@ var React = require('react');
 var FromCity = React.createClass({ 
     onChange: function(e){
         var city = e.target.value === '...' ? null : e.target.value;
-        console.log(city);
         this.props.onChange(city);
     },
     render: function() {

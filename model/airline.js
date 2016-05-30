@@ -1,7 +1,7 @@
 
 function Airline(data){
     data = data || {};
-    this.id = data.id || Date.now();
+    this.id = Number(data.id) || Date.now();
     this.number = data.number || "";
     this.planeType = data.planeType || "";
     this.fromCity = data.fromCity || "";

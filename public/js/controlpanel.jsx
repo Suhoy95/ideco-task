@@ -11,14 +11,11 @@ var ControlPanel = React.createClass({
             toCity: null,
             state: null
         };
-        return { 
-            isEdition: false
-        };
+        return {};
     },
 
     switchMode: function(e){
         var isEdition = this.props.onSwitchMode();
-        this.setState({isEdition: isEdition});
         e.preventDefault();
     },
 
@@ -27,7 +24,6 @@ var ControlPanel = React.createClass({
     },
 
     onFromCityChange: function(fromCity){
-        console.log(fromCity);
         this.controlFilters.fromCity = fromCity;
         this.chageFilters();
     },
@@ -58,7 +54,7 @@ var ControlPanel = React.createClass({
                 <div className="pure-u-3-24">
                     <button className="pure-button" 
                             onClick={this.switchMode}>
-                            { this.state.isEdition ? "Выйти из редактирования" : "Редактировать" }
+                            { this.props.isEdition ? "Выйти из редактирования" : "Редактировать" }
                     </button>
                 </div>
             </div>

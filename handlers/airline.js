@@ -89,6 +89,48 @@ router.post('/', function(req, res) {
     }
 });
 
+router.put('/', function(req, res) {
+    var airline = req.body && req.body.airline;
+
+    if(airline === undefined ){
+        console.log(new Error('Bad airline'));
+        res.sendStatus(400);
+        return;
+    }
+    
+    airline = new Airline(airline);
+    
+    var airlines;
+    fs.readFile(AIRLINES_FILE, updateAirline);
+
+    function updateAirline(err, data) {
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+    
+        airlines = JSON.parse(data);
+
+        var target = _.filter(airlines, function(a){ return a.id === airline.id;})[0];
+        if(target)
+            for(var key in target)
+                target[key] = airline[key];
+
+        fs.writeFile(AIRLINES_FILE, JSON.stringify(airlines, null, 4), fileHasSaved);
+    }
+
+    function fileHasSaved(err) {
+        if(err){
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+    
+        res.sendStatus(200);
+    }
+});
+
 router.delete('/', function(req, res) {
     var id = req.body && Number(req.body.id);
 
@@ -124,7 +166,7 @@ router.delete('/', function(req, res) {
             return;
         }
     
-        res.json(airlines);
+        res.sendStatus(200);
     }
 });
 

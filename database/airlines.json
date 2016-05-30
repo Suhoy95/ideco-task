@@ -10,16 +10,6 @@
         "state": "приземлился"
     },
     {
-        "id": 1464476903579,
-        "number": "002",
-        "planeType": "asdf",
-        "fromCity": "Санкт-Петербург",
-        "toCity": "Новосибирск",
-        "startTime": "asdfg",
-        "endTime": "asd",
-        "state": "вылетел"
-    },
-    {
         "id": 1464630511933,
         "number": "003",
         "planeType": "МИГ-31",
@@ -33,10 +23,20 @@
         "id": 1464630618496,
         "number": "004",
         "planeType": "МИГ-21",
-        "fromCity": "Ростов-на-Дону",
+        "fromCity": "Москва",
         "toCity": "Екатеринбург",
         "startTime": "10.11.2015",
         "endTime": "11.11.2015",
         "state": "задержан"
+    },
+    {
+        "id": 1464645353668,
+        "number": "asfd",
+        "planeType": "sdf",
+        "fromCity": "Казань",
+        "toCity": "НижнийНовгород",
+        "startTime": "esf",
+        "endTime": "edsf",
+        "state": "вылетел"
     }
 ]

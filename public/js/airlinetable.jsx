@@ -6,48 +6,51 @@ var EditionAirline = require('./airlinetable/editionairline.jsx');
 
 
 var AirlineTable = React.createClass({
-    getInitialState: function() {
-        return { 
-            isEdition: false
-        };
-    }, 
+    getRows: function(){
+        var self = this;
+        return this.props.airlines
+                         .map(this.props.isEditionTable ? toEditionAirline : toAirline);
+    
+        function toAirline(data){
+            return (<AirlineView airline={data} />);
+        }
+
+        function toEditionAirline(data){
+            return (<EditionAirline airline={data} 
+                                    onSaveAirline={self.props.onSaveAirline}
+                                    onDeleteAirline={self.props.onDeleteAirline} 
+                                    cities={self.props.cities}
+                                    states={self.props.states} 
+                                    />);
+        }
+    },
 
     render: function() {
-        var self = this;
-        var airlines = this.props.airlines
-                           .map(this.props.isEditionTable ? toEditionAirline : toAirline);
+        var airlines = this.getRows();
         return (
          <div className="airlineTable">
-            <table className="pure-table full-width">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Тип</th>
-                        <th>Откуда</th>
-                        <th>Куда</th>
-                        <th>Время вылета</th>
-                        <th>Время посадки</th>
-                        <th>Статус</th>
-                        {this.props.isEditionTable ? <th> </th> : null}
-                        {this.props.isEditionTable ? <th> </th> : null}
-                    </tr>
-                </thead>
+            <form className="pure-form">
+                <table className="pure-table full-width">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Тип</th>
+                            <th>Откуда</th>
+                            <th>Куда</th>
+                            <th>Время вылета</th>
+                            <th>Время посадки</th>
+                            <th>Статус</th>
+                            {this.props.isEditionTable ? <th> </th> : null}
+                            {this.props.isEditionTable ? <th> </th> : null}
+                        </tr>
+                    </thead>
 
-                <tbody>
-                    {airlines}
-                </tbody>
-            </table>
-        </div>);
-
-    function toAirline(data){
-        return (<AirlineView airline={data} />);
-    }
-
-    function toEditionAirline(data){
-        if(self.state.isEdition)
-            return (<EditionAirline airline={data} onDeleteAirline={self.props.onDeleteAirline}/>);
-        return (<ShowAirline airline={data} onDeleteAirline={self.props.onDeleteAirline}/>);
-    }
+                    <tbody>
+                        {airlines}
+                    </tbody>
+                </table>
+            </form>
+        </div>);    
   }
 });
 

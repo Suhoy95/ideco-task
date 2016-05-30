@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
+var _ = require('underscore');
 
 var ControlPanel = require('./controlpanel.jsx');
 var AirlineTable = require('./airlinetable.jsx');
@@ -33,10 +34,10 @@ var AirlineApplication = React.createClass({
     },
 
     loadAirlines: function(filters){
-        console.log(filters);
         var self = this;
         $.get('/api/airline', filters)
          .success(function(data){
+            self.setState({isEdition: false});
             self.setState({airlines: data});
          });
     },
@@ -48,6 +49,14 @@ var AirlineApplication = React.createClass({
             self.loadAmountAirlines();
          });
     },
+    saveAirline: function(airline){
+        var self = this;   
+        $.ajax({
+            type: "PUT",
+            url: '/api/airline',
+            data: {airline: airline}
+        });
+    },
     deleteAirline: function(id){
         var self = this;   
         $.ajax({
@@ -55,7 +64,10 @@ var AirlineApplication = React.createClass({
             url: '/api/airline',
             data: {id: id},
             success: function(data){
-                self.setState({airlines: data});
+                var newAirlines = _.filter(this.state.airlines, function(airline){
+                                                                    return airline.id != id;
+                                                                });
+                self.setState({airlines: newAirlines});
             }
         });
     },
@@ -125,11 +137,16 @@ var AirlineApplication = React.createClass({
                           onSwitchMode={this.switchMode}
                           cities={this.state.cities}
                           states={this.state.states} 
-                          amountAirlines={this.state.amountAirlines}/>
+                          amountAirlines={this.state.amountAirlines}
+                          isEdition={this.state.isEdition}/>
             
             <AirlineTable isEditionTable={this.state.isEdition}
+                          onSaveAirline={this.saveAirline}
                           onDeleteAirline={this.deleteAirline}
-                          airlines={this.state.airlines}/>
+                          airlines={this.state.airlines}
+                          cities={this.state.cities}
+                          states={this.state.states} 
+                          />
 
             {this.state.isEdition ? 
                 <AddPanel onAddAirline={this.addAirline}
@@ -141,7 +158,7 @@ var AirlineApplication = React.createClass({
                           states={this.state.states}
                           onAddState={this.addState}
                           onDeleteState={this.deleteState} 
-                           /> 
+                          /> 
                 : null}
         </div>);
     }
