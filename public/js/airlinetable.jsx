@@ -45,8 +45,8 @@ var AirlineTable = React.createClass({
 
     function toEditionAirline(data){
         if(self.state.isEdition)
-            return (<EditionAirline airline={data} />);
-        return (<ShowAirline airline={data} />);
+            return (<EditionAirline airline={data} onDeleteAirline={self.props.onDeleteAirline}/>);
+        return (<ShowAirline airline={data} onDeleteAirline={self.props.onDeleteAirline}/>);
     }
   }
 });

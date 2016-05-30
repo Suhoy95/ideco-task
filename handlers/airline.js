@@ -63,9 +63,9 @@ router.post('/', function(req, res) {
     airline = new Airline(airline);
     
     var airlines;
-    fs.readFile(AIRLINES_FILE, addNewState);
+    fs.readFile(AIRLINES_FILE, addNewAirline);
 
-    function addNewState(err, data) {
+    function addNewAirline(err, data) {
         if(err){
             console.log(err);
             res.sendStatus(500);
@@ -90,28 +90,32 @@ router.post('/', function(req, res) {
 });
 
 router.delete('/', function(req, res) {
-    var state = req.body && req.body.state;
+    var id = req.body && Number(req.body.id);
 
-    if(state === undefined ){
+    if(id === undefined ){
         console.log(new Error('Bad state'));
         res.sendStatus(400);
         return;
     }
   
-    var states;
-    fs.readFile(AIRLINES_FILE, addNewState);
+    var airlines;
+    fs.readFile(AIRLINES_FILE, deleteAirline);
 
-    function addNewState(err, data) {
+    function deleteAirline(err, data) {
         if(err){
             console.log(err);
             res.sendStatus(500);
             return;
         }
     
-        states = _.without(JSON.parse(data), state);
+        airlines = _.filter(JSON.parse(data), function(airline){
+                                                    return airline.id != id;
+                                              });
 
-        fs.writeFile(AIRLINES_FILE, JSON.stringify(states, null, 4), fileHasSaved);
+        fs.writeFile(AIRLINES_FILE, JSON.stringify(airlines, null, 4), fileHasSaved);
     }
+
+
 
     function fileHasSaved(err) {
         if(err){
@@ -120,7 +124,7 @@ router.delete('/', function(req, res) {
             return;
         }
     
-        res.json(states);
+        res.json(airlines);
     }
 });
 

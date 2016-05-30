@@ -95,6 +95,17 @@
 	            self.loadAmountAirlines();
 	        });
 	    },
+	    deleteAirline: function deleteAirline(id) {
+	        var self = this;
+	        $.ajax({
+	            type: "DELETE",
+	            url: '/api/airline',
+	            data: { id: id },
+	            success: function success(data) {
+	                self.setState({ airlines: data });
+	            }
+	        });
+	    },
 
 	    loadCities: function loadCities() {
 	        var self = this;
@@ -160,6 +171,7 @@
 	                states: this.state.states,
 	                amountAirlines: this.state.amountAirlines }),
 	            React.createElement(AirlineTable, { isEditionTable: this.state.isEdition,
+	                onDeleteAirline: this.deleteAirline,
 	                airlines: this.state.airlines }),
 	            this.state.isEdition ? React.createElement(AddPanel, { onAddAirline: this.addAirline,
 
@@ -30618,8 +30630,8 @@
 	        }
 
 	        function toEditionAirline(data) {
-	            if (self.state.isEdition) return React.createElement(EditionAirline, { airline: data });
-	            return React.createElement(ShowAirline, { airline: data });
+	            if (self.state.isEdition) return React.createElement(EditionAirline, { airline: data, onDeleteAirline: self.props.onDeleteAirline });
+	            return React.createElement(ShowAirline, { airline: data, onDeleteAirline: self.props.onDeleteAirline });
 	        }
 	    }
 	});
@@ -30703,6 +30715,11 @@
 	        this.setState({ airline: this.props.airline });
 	    },
 
+	    onDelete: function onDelete(e) {
+	        this.props.onDeleteAirline(this.state.airline.id);
+	        e.preventDefault();
+	    },
+
 	    render: function render() {
 	        return React.createElement(
 	            "tr",
@@ -30756,7 +30773,7 @@
 	                null,
 	                React.createElement(
 	                    "button",
-	                    { className: "pure-button" },
+	                    { className: "pure-button", onClick: this.onDelete },
 	                    "Удалить"
 	                )
 	            )
@@ -30785,6 +30802,11 @@
 
 	    componentDidMount: function componentDidMount() {
 	        this.setState({ airline: this.props.airline });
+	    },
+
+	    onDelete: function onDelete(e) {
+	        this.props.onDeleteAirline(this.state.airline.id);
+	        e.preventDefault();
 	    },
 
 	    render: function render() {
@@ -30840,7 +30862,7 @@
 	                null,
 	                React.createElement(
 	                    "button",
-	                    { className: "pure-button" },
+	                    { className: "pure-button", onClick: this.onDelete },
 	                    "Удалить"
 	                )
 	            )

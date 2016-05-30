@@ -38,25 +38,5 @@
         "startTime": "10.11.2015",
         "endTime": "11.11.2015",
         "state": "задержан"
-    },
-    {
-        "id": 1464636986811,
-        "number": "004",
-        "planeType": "asdf",
-        "fromCity": "НижнийНовгород",
-        "toCity": "",
-        "startTime": "sadasd",
-        "endTime": "asd",
-        "state": "идет посадка"
-    },
-    {
-        "id": 1464637216556,
-        "number": "",
-        "planeType": "",
-        "fromCity": "...",
-        "toCity": "...",
-        "startTime": "",
-        "endTime": "",
-        "state": "..."
     }
 ]

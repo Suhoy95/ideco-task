@@ -65,9 +65,9 @@ router.delete('/', function(req, res) {
     }
   
     var states;
-    fs.readFile(STATES_FILE, addNewState);
+    fs.readFile(STATES_FILE, deleteState);
 
-    function addNewState(err, data) {
+    function deleteState(err, data) {
         if(err){
             console.log(err);
             res.sendStatus(500);

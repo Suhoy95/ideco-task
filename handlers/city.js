@@ -29,9 +29,9 @@ router.post('/', function(req, res) {
     }
   
     var cities;
-    fs.readFile(CITIES_FILE, addNewState);
+    fs.readFile(CITIES_FILE, addNewCity);
 
-    function addNewState(err, data) {
+    function addNewCity(err, data) {
         if(err){
             console.log(err);
             res.sendStatus(500);
@@ -65,9 +65,9 @@ router.delete('/', function(req, res) {
     }
   
     var cities;
-    fs.readFile(CITIES_FILE, addNewState);
+    fs.readFile(CITIES_FILE, deleteCity);
 
-    function addNewState(err, data) {
+    function deleteCity(err, data) {
         if(err){
             console.log(err);
             res.sendStatus(500);

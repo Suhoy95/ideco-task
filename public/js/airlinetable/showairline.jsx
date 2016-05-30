@@ -11,6 +11,11 @@ var ShowAirlineView = React.createClass({
         this.setState({airline:this.props.airline})
     },
 
+    onDelete: function(e){
+        this.props.onDeleteAirline(this.state.airline.id);
+        e.preventDefault();
+    },
+
     render: function() {
         return (
             <tr className="pure-table-odd">
@@ -22,7 +27,7 @@ var ShowAirlineView = React.createClass({
                 <td>{this.state.airline.endTime}</td>
                 <td>{this.state.airline.state}</td>
                 <td><button className="pure-button">Редктировать</button></td>
-                <td><button className="pure-button">Удалить</button></td>
+                <td><button className="pure-button" onClick={this.onDelete}>Удалить</button></td>
             </tr>
         );
     }

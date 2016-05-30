@@ -48,6 +48,17 @@ var AirlineApplication = React.createClass({
             self.loadAmountAirlines();
          });
     },
+    deleteAirline: function(id){
+        var self = this;   
+        $.ajax({
+            type: "DELETE",
+            url: '/api/airline',
+            data: {id: id},
+            success: function(data){
+                self.setState({airlines: data});
+            }
+        });
+    },
 
     loadCities: function(){
         var self = this;
@@ -117,6 +128,7 @@ var AirlineApplication = React.createClass({
                           amountAirlines={this.state.amountAirlines}/>
             
             <AirlineTable isEditionTable={this.state.isEdition}
+                          onDeleteAirline={this.deleteAirline}
                           airlines={this.state.airlines}/>
 
             {this.state.isEdition ? 
