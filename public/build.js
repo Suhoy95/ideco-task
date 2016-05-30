@@ -106,7 +106,10 @@
 	        $.ajax({
 	            type: "PUT",
 	            url: '/api/airline',
-	            data: { airline: airline }
+	            data: { airline: airline },
+	            success: function success() {
+	                self.setState({ amountAirlines: self.state.amountAirlines + 1 });
+	            }
 	        });
 	    },
 	    deleteAirline: function deleteAirline(id) {
@@ -120,6 +123,7 @@
 	                    return airline.id != id;
 	                });
 	                self.setState({ airlines: newAirlines });
+	                self.setState({ amountAirlines: self.state.amountAirlines - 1 });
 	            }
 	        });
 	    },
@@ -30673,49 +30677,49 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
 
 	var AirlineView = React.createClass({
-	    displayName: "AirlineView",
+	    displayName: 'AirlineView',
 
 	    render: function render() {
 	        return React.createElement(
-	            "tr",
-	            { className: "pure-table-odd" },
+	            'tr',
+	            null,
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.number
 	            ),
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.planeType
 	            ),
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.fromCity
 	            ),
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.toCity
 	            ),
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.startTime
 	            ),
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.endTime
 	            ),
 	            React.createElement(
-	                "td",
+	                'td',
 	                null,
 	                this.props.airline.state
 	            )

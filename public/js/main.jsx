@@ -59,7 +59,10 @@ var AirlineApplication = React.createClass({
         $.ajax({
             type: "PUT",
             url: '/api/airline',
-            data: {airline: airline}
+            data: {airline: airline},
+            success: function(){
+              self.setState({amountAirlines: self.state.amountAirlines + 1});
+            }
         });
     },
     deleteAirline: function(id){
@@ -73,6 +76,7 @@ var AirlineApplication = React.createClass({
                                                                     return airline.id != id;
                                                                 });
                 self.setState({airlines: newAirlines});
+                self.setState({amountAirlines: self.state.amountAirlines - 1});
             }
         });
     },
