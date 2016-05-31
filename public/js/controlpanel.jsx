@@ -49,7 +49,7 @@ var ControlPanel = React.createClass({
                 <State states={this.props.states} onChange={this.onStateChange} />
      
                 <div className="pure-u-3-24">
-                    <div className="counter">Авиорейсов: {this.props.amountAirlines}</div>
+                    <div className="counter">Авиарейсов: {this.props.amountAirlines}</div>
                 </div>
                 <div className="pure-u-3-24">
                     <button className="pure-button" 

@@ -31943,7 +31943,7 @@
 	                            React.createElement(
 	                                'div',
 	                                { className: 'counter' },
-	                                'Авиорейсов: ',
+	                                'Авиарейсов: ',
 	                                this.props.amountAirlines
 	                            )
 	                        ),
