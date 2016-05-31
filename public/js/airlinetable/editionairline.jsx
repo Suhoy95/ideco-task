@@ -57,7 +57,7 @@ var AdminAirlineView = React.createClass({
 
     render: function() {
         return (
-            <tr className="pure-table-odd">
+            <tr>
                 <InputCell isEdition={this.state.isEdition}
                            name="number"
                            onChange={this.onChange}

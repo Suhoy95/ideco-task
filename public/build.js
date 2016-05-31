@@ -49,11 +49,11 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
 	var $ = __webpack_require__(168);
-	var _ = __webpack_require__(190);
+	var _ = __webpack_require__(169);
 
-	var ControlPanel = __webpack_require__(169);
-	var AirlineTable = __webpack_require__(173);
-	var AddPanel = __webpack_require__(177);
+	var ControlPanel = __webpack_require__(170);
+	var AirlineTable = __webpack_require__(174);
+	var AddPanel = __webpack_require__(179);
 
 	var AirlineApplication = React.createClass({
 	    displayName: 'AirlineApplication',
@@ -30316,1309 +30316,6 @@
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var FromCity = __webpack_require__(170);
-	var ToCity = __webpack_require__(171);
-	var State = __webpack_require__(172);
-
-	var ControlPanel = React.createClass({
-	    displayName: 'ControlPanel',
-
-	    getInitialState: function getInitialState() {
-	        this.controlFilters = {
-	            fromCity: null,
-	            toCity: null,
-	            state: null
-	        };
-	        return {};
-	    },
-
-	    switchMode: function switchMode(e) {
-	        var isEdition = this.props.onSwitchMode();
-	        e.preventDefault();
-	    },
-
-	    chageFilters: function chageFilters() {
-	        this.props.onFiltersChange(this.controlFilters);
-	    },
-
-	    onFromCityChange: function onFromCityChange(fromCity) {
-	        this.controlFilters.fromCity = fromCity;
-	        this.chageFilters();
-	    },
-	    onToCityChange: function onToCityChange(toCity) {
-	        this.controlFilters.toCity = toCity;
-	        this.chageFilters();
-	    },
-	    onStateChange: function onStateChange(state) {
-	        this.controlFilters.state = state;
-	        this.chageFilters();
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { className: 'controlPanel' },
-	            React.createElement(
-	                'form',
-	                { className: 'pure-form' },
-	                React.createElement(
-	                    'fieldset',
-	                    null,
-	                    React.createElement(
-	                        'legend',
-	                        null,
-	                        React.createElement(
-	                            'h1',
-	                            null,
-	                            'Авиарейсы'
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'pure-g' },
-	                        React.createElement(FromCity, { cities: this.props.cities, onChange: this.onFromCityChange }),
-	                        React.createElement(ToCity, { cities: this.props.cities, onChange: this.onToCityChange }),
-	                        React.createElement(State, { states: this.props.states, onChange: this.onStateChange }),
-	                        React.createElement(
-	                            'div',
-	                            { className: 'pure-u-3-24' },
-	                            React.createElement(
-	                                'div',
-	                                { className: 'counter' },
-	                                'Авиорейсов: ',
-	                                this.props.amountAirlines
-	                            )
-	                        ),
-	                        React.createElement(
-	                            'div',
-	                            { className: 'pure-u-3-24' },
-	                            React.createElement(
-	                                'button',
-	                                { className: 'pure-button',
-	                                    onClick: this.switchMode },
-	                                this.props.isEdition ? "Выйти из редактирования" : "Редактировать"
-	                            )
-	                        )
-	                    )
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = ControlPanel;
-
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var FromCity = React.createClass({
-	    displayName: 'FromCity',
-
-	    onChange: function onChange(e) {
-	        var city = e.target.value === '...' ? null : e.target.value;
-	        this.props.onChange(city);
-	    },
-	    render: function render() {
-	        var cityOptions = this.props.cities.map(toOption);
-
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-6-24 fromCity' },
-	            React.createElement(
-	                'label',
-	                null,
-	                'Город отправления'
-	            ),
-	            React.createElement(
-	                'select',
-	                { className: 'pure-input-1-2', onChange: this.onChange },
-	                React.createElement(
-	                    'option',
-	                    { value: '...' },
-	                    '...'
-	                ),
-	                cityOptions
-	            )
-	        );
-
-	        function toOption(city) {
-	            return React.createElement(
-	                'option',
-	                { value: city },
-	                city
-	            );
-	        }
-	    }
-	});
-
-	module.exports = FromCity;
-
-/***/ },
-/* 171 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var ToCity = React.createClass({
-	    displayName: 'ToCity',
-
-	    onChange: function onChange(e) {
-	        var city = e.target.value === '...' ? null : e.target.value;
-	        this.props.onChange(city);
-	    },
-
-	    render: function render() {
-	        var cityOptions = this.props.cities.map(toOption);
-
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-6-24 toCity' },
-	            React.createElement(
-	                'label',
-	                null,
-	                'Город прибытия'
-	            ),
-	            React.createElement(
-	                'select',
-	                { className: 'pure-input-1-2', onChange: this.onChange },
-	                React.createElement(
-	                    'option',
-	                    { value: '...' },
-	                    '...'
-	                ),
-	                cityOptions
-	            )
-	        );
-
-	        function toOption(city) {
-	            return React.createElement(
-	                'option',
-	                { value: city },
-	                city
-	            );
-	        }
-	    }
-	});
-
-	module.exports = ToCity;
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var State = React.createClass({
-	    displayName: 'State',
-
-	    onChange: function onChange(e) {
-	        var state = e.target.value === '...' ? null : e.target.value;
-	        this.props.onChange(state);
-	    },
-
-	    render: function render() {
-	        var stateOptions = this.props.states.map(toOption);
-
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-5-24 state' },
-	            React.createElement(
-	                'label',
-	                null,
-	                'Статус'
-	            ),
-	            React.createElement(
-	                'select',
-	                { className: 'pure-input-1-2', onChange: this.onChange },
-	                React.createElement(
-	                    'option',
-	                    { value: '...' },
-	                    '...'
-	                ),
-	                stateOptions
-	            )
-	        );
-
-	        function toOption(state) {
-	            return React.createElement(
-	                'option',
-	                { value: state },
-	                state
-	            );
-	        }
-	    }
-	});
-
-	module.exports = State;
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AirlineView = __webpack_require__(174);
-	var EditionAirline = __webpack_require__(176);
-
-	var AirlineTable = React.createClass({
-	    displayName: 'AirlineTable',
-
-	    getRows: function getRows() {
-	        var self = this;
-	        return this.props.airlines.map(this.props.isEditionTable ? toEditionAirline : toAirline);
-
-	        function toAirline(data) {
-	            return React.createElement(AirlineView, { airline: data });
-	        }
-
-	        function toEditionAirline(data) {
-	            return React.createElement(EditionAirline, { airline: data,
-	                onSaveAirline: self.props.onSaveAirline,
-	                onDeleteAirline: self.props.onDeleteAirline,
-	                cities: self.props.cities,
-	                states: self.props.states
-	            });
-	        }
-	    },
-
-	    render: function render() {
-	        var airlines = this.getRows();
-	        return React.createElement(
-	            'div',
-	            { className: 'airlineTable' },
-	            React.createElement(
-	                'form',
-	                { className: 'pure-form' },
-	                React.createElement(
-	                    'table',
-	                    { className: 'pure-table full-width' },
-	                    React.createElement(
-	                        'thead',
-	                        null,
-	                        React.createElement(
-	                            'tr',
-	                            null,
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                '#'
-	                            ),
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                'Тип'
-	                            ),
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                'Откуда'
-	                            ),
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                'Куда'
-	                            ),
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                'Время вылета'
-	                            ),
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                'Время посадки'
-	                            ),
-	                            React.createElement(
-	                                'th',
-	                                null,
-	                                'Статус'
-	                            ),
-	                            this.props.isEditionTable ? React.createElement(
-	                                'th',
-	                                null,
-	                                ' '
-	                            ) : null,
-	                            this.props.isEditionTable ? React.createElement(
-	                                'th',
-	                                null,
-	                                ' '
-	                            ) : null
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'tbody',
-	                        null,
-	                        airlines
-	                    )
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AirlineTable;
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AirlineView = React.createClass({
-	    displayName: 'AirlineView',
-
-	    render: function render() {
-	        return React.createElement(
-	            'tr',
-	            null,
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.number
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.planeType
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.fromCity
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.toCity
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.startTime
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.endTime
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                this.props.airline.state
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AirlineView;
-
-/***/ },
-/* 175 */,
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var InputCell = __webpack_require__(188);
-	var SelectCell = __webpack_require__(189);
-
-	var AdminAirlineView = React.createClass({
-	    displayName: 'AdminAirlineView',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            id: 0,
-	            number: "",
-	            planeType: "",
-	            fromCity: "",
-	            toCity: "",
-	            startTime: "",
-	            endTime: "",
-	            state: "",
-	            isEdition: false
-	        };
-	    },
-
-	    componentDidMount: function componentDidMount() {
-	        // console.log(this.state);
-	        if (this.state.id != this.props.airline.id) {
-	            this.setState(this.props.airline);
-	            // console.log(this.props.airline);
-	        }
-	    },
-
-	    onChange: function onChange(name, value) {
-	        var data = {};
-	        data[name] = value;
-	        this.setState(data);
-	    },
-
-	    changeMode: function changeMode(e) {
-	        var newMode = !this.state.isEdition;
-	        this.setState({ isEdition: newMode });
-	        if (!newMode) {
-	            this.props.onSaveAirline({
-	                id: this.state.id,
-	                number: this.state.number,
-	                planeType: this.state.planeType,
-	                fromCity: this.state.fromCity,
-	                toCity: this.state.toCity,
-	                startTime: this.state.startTime,
-	                endTime: this.state.endTime,
-	                state: this.state.state
-	            });
-	        }
-	        e.preventDefault();
-	    },
-
-	    onDelete: function onDelete(e) {
-	        this.props.onDeleteAirline(this.state.id);
-	        e.preventDefault();
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            'tr',
-	            { className: 'pure-table-odd' },
-	            React.createElement(InputCell, { isEdition: this.state.isEdition,
-	                name: 'number',
-	                onChange: this.onChange,
-	                value: this.state.number }),
-	            React.createElement(InputCell, { isEdition: this.state.isEdition,
-	                name: 'planeType',
-	                onChange: this.onChange,
-	                value: this.state.planeType }),
-	            React.createElement(SelectCell, { isEdition: this.state.isEdition,
-	                name: 'fromCity',
-	                onChange: this.onChange,
-	                value: this.state.fromCity,
-	                values: this.props.cities }),
-	            React.createElement(SelectCell, { isEdition: this.state.isEdition,
-	                name: 'toCity',
-	                onChange: this.onChange,
-	                value: this.state.toCity,
-	                values: this.props.cities }),
-	            React.createElement(InputCell, { isEdition: this.state.isEdition,
-	                name: 'startTime',
-	                onChange: this.onChange,
-	                value: this.state.startTime }),
-	            React.createElement(InputCell, { isEdition: this.state.isEdition,
-	                name: 'endTime',
-	                onChange: this.onChange,
-	                value: this.state.endTime }),
-	            React.createElement(SelectCell, { isEdition: this.state.isEdition,
-	                name: 'state',
-	                onChange: this.onChange,
-	                value: this.state.state,
-	                values: this.props.states }),
-	            React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                    'button',
-	                    { className: 'pure-button',
-	                        onClick: this.changeMode },
-	                    this.state.isEdition ? "Сохранить" : "Редактировать"
-	                )
-	            ),
-	            React.createElement(
-	                'td',
-	                null,
-	                React.createElement(
-	                    'button',
-	                    { className: 'pure-button',
-	                        onClick: this.onDelete },
-	                    'Удалить'
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AdminAirlineView;
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AddAirline = __webpack_require__(178);
-	var EditCity = __webpack_require__(182);
-	var EditState = __webpack_require__(185);
-
-	var AddPanel = React.createClass({
-	    displayName: 'AddPanel',
-
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { className: 'addPanel' },
-	            React.createElement(AddAirline, { cities: this.props.cities,
-	                states: this.props.states,
-	                onAddAirline: this.props.onAddAirline }),
-	            React.createElement('legend', null),
-	            React.createElement(
-	                'div',
-	                { className: 'pure-g' },
-	                React.createElement(
-	                    'div',
-	                    { className: 'pure-u-1-2' },
-	                    React.createElement(EditCity, { cities: this.props.cities,
-	                        onAddCity: this.props.onAddCity,
-	                        onDeleteCity: this.props.onDeleteCity
-	                    })
-	                ),
-	                React.createElement(
-	                    'div',
-	                    { className: 'pure-u-1-2' },
-	                    React.createElement(EditState, { states: this.props.states,
-	                        onAddState: this.props.onAddState,
-	                        onDeleteState: this.props.onDeleteState })
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AddPanel;
-
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var FromCity = __webpack_require__(179);
-	var ToCity = __webpack_require__(180);
-	var State = __webpack_require__(181);
-
-	var initAirline = {
-	    number: "",
-	    planeType: "",
-	    fromCity: "...",
-	    toCity: "...",
-	    startTime: "",
-	    endTime: "",
-	    state: "..."
-	};
-
-	var AddAirline = React.createClass({
-	    displayName: 'AddAirline',
-
-	    getInitialState: function getInitialState() {
-	        return Object.create(initAirline);
-	    },
-
-	    onAddAirline: function onAddAirline(e) {
-	        var state = this.state;
-
-	        this.props.onAddAirline({
-	            number: state.number,
-	            planeType: state.planeType,
-	            fromCity: state.fromCity,
-	            toCity: state.toCity,
-	            startTime: state.startTime,
-	            endTime: state.endTime,
-	            state: state.state
-	        });
-
-	        this.setState({
-	            number: "",
-	            planeType: "",
-	            fromCity: "...",
-	            toCity: "...",
-	            startTime: "",
-	            endTime: "",
-	            state: "..."
-	        });
-	        e.preventDefault();
-	    },
-
-	    onNumperChange: function onNumperChange(e) {
-	        this.setState({ number: e.target.value });
-	    },
-
-	    onPlaneTypeChange: function onPlaneTypeChange(e) {
-	        this.setState({ planeType: e.target.value });
-	    },
-
-	    onFromCityChange: function onFromCityChange(e) {
-	        this.setState({ fromCity: e.target.value });
-	    },
-
-	    onToCityChange: function onToCityChange(e) {
-	        this.setState({ toCity: e.target.value });
-	    },
-
-	    onStateChange: function onStateChange(e) {
-	        this.setState({ state: e.target.value });
-	    },
-
-	    onStartTimeChange: function onStartTimeChange(e) {
-	        this.setState({ startTime: e.target.value });
-	    },
-
-	    onEndTimeChange: function onEndTimeChange(e) {
-	        this.setState({ endTime: e.target.value });
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            'form',
-	            { className: 'pure-form pure-form-stacked' },
-	            React.createElement(
-	                'fieldset',
-	                null,
-	                React.createElement(
-	                    'legend',
-	                    null,
-	                    'Создать'
-	                ),
-	                React.createElement(
-	                    'div',
-	                    { className: 'pure-g' },
-	                    React.createElement(
-	                        'div',
-	                        { className: 'pure-u-5-24' },
-	                        React.createElement(
-	                            'label',
-	                            null,
-	                            'Номер рейса:'
-	                        ),
-	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
-	                            onChange: this.onNumperChange,
-	                            value: this.state.number })
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'pure-u-6-24' },
-	                        React.createElement(
-	                            'label',
-	                            null,
-	                            'Тип самолета:'
-	                        ),
-	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
-	                            onChange: this.onPlaneTypeChange,
-	                            value: this.state.planeType })
-	                    ),
-	                    React.createElement(FromCity, { cities: this.props.cities,
-	                        onFromCityChange: this.onFromCityChange,
-	                        value: this.state.fromCity }),
-	                    React.createElement(ToCity, { cities: this.props.cities,
-	                        onToCityChange: this.onToCityChange,
-	                        value: this.state.toCity }),
-	                    React.createElement(State, { states: this.props.states,
-	                        onStateChange: this.onStateChange,
-	                        value: this.state.state }),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'pure-u-5-24' },
-	                        React.createElement(
-	                            'label',
-	                            null,
-	                            'Время вылет:'
-	                        ),
-	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
-	                            onChange: this.onStartTimeChange,
-	                            value: this.state.startTime })
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'pure-u-6-24' },
-	                        React.createElement(
-	                            'label',
-	                            null,
-	                            'Время посадки:'
-	                        ),
-	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
-	                            onChange: this.onEndTimeChange,
-	                            value: this.state.endTime })
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'pure-u-3-24' },
-	                        React.createElement('br', null),
-	                        React.createElement(
-	                            'button',
-	                            { className: 'button-large pure-button',
-	                                onClick: this.onAddAirline },
-	                            'Создать'
-	                        )
-	                    )
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AddAirline;
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-
-	var FromCity = React.createClass({
-	    displayName: "FromCity",
-
-	    render: function render() {
-	        var cityOptions = this.props.cities.map(toOption);
-
-	        return React.createElement(
-	            "div",
-	            { className: "pure-u-4-24 fromCity" },
-	            React.createElement(
-	                "label",
-	                null,
-	                "Город отправления"
-	            ),
-	            React.createElement(
-	                "select",
-	                { className: "pure-u-23-24",
-	                    onChange: this.props.onFromCityChange,
-	                    value: this.props.value },
-	                React.createElement(
-	                    "option",
-	                    { value: "..." },
-	                    "..."
-	                ),
-	                cityOptions
-	            )
-	        );
-
-	        function toOption(city) {
-	            return React.createElement(
-	                "option",
-	                { value: city },
-	                city
-	            );
-	        }
-	    }
-	});
-
-	module.exports = FromCity;
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-
-	var ToCity = React.createClass({
-	    displayName: "ToCity",
-
-	    render: function render() {
-	        var cityOptions = this.props.cities.map(toOption);
-
-	        return React.createElement(
-	            "div",
-	            { className: "pure-u-4-24 toCity" },
-	            React.createElement(
-	                "label",
-	                null,
-	                "Город прибытия"
-	            ),
-	            React.createElement(
-	                "select",
-	                { className: "pure-u-23-24",
-	                    onChange: this.props.onToCityChange,
-	                    value: this.props.value },
-	                React.createElement(
-	                    "option",
-	                    { value: "..." },
-	                    "..."
-	                ),
-	                cityOptions
-	            )
-	        );
-
-	        function toOption(city) {
-	            return React.createElement(
-	                "option",
-	                { value: city },
-	                city
-	            );
-	        }
-	    }
-	});
-
-	module.exports = ToCity;
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-
-	var State = React.createClass({
-	    displayName: "State",
-
-	    render: function render() {
-	        var stateOptions = this.props.states.map(toOption);
-
-	        return React.createElement(
-	            "div",
-	            { className: "pure-u-5-24 state" },
-	            React.createElement(
-	                "label",
-	                null,
-	                "Статус"
-	            ),
-	            React.createElement(
-	                "select",
-	                { className: "pure-u-23-24",
-	                    onChange: this.props.onStateChange,
-	                    value: this.props.value },
-	                React.createElement(
-	                    "option",
-	                    { value: "..." },
-	                    "..."
-	                ),
-	                stateOptions
-	            )
-	        );
-
-	        function toOption(state) {
-	            return React.createElement(
-	                "option",
-	                { value: state },
-	                state
-	            );
-	        }
-	    }
-	});
-
-	module.exports = State;
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AddCity = __webpack_require__(183);
-	var DeleteCity = __webpack_require__(184);
-
-	var EditCity = React.createClass({
-	    displayName: 'EditCity',
-
-	    render: function render() {
-	        return React.createElement(
-	            'form',
-	            { className: 'pure-form EditCity' },
-	            React.createElement(
-	                'fieldset',
-	                null,
-	                React.createElement(
-	                    'legend',
-	                    null,
-	                    'Город'
-	                ),
-	                React.createElement(
-	                    'div',
-	                    { className: 'pure-g' },
-	                    React.createElement(AddCity, { onAddCity: this.props.onAddCity }),
-	                    React.createElement(DeleteCity, { cities: this.props.cities,
-	                        onDeleteCity: this.props.onDeleteCity })
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = EditCity;
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AddCity = React.createClass({
-	    displayName: 'AddCity',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            city: ""
-	        };
-	    },
-
-	    onAddCity: function onAddCity(e) {
-	        var newCity = this.state.city;
-	        if (newCity === '') return;
-
-	        this.props.onAddCity(newCity);
-	        this.setState({ city: '' });
-	        e.preventDefault();
-	    },
-
-	    onCityChange: function onCityChange(e) {
-	        this.setState({ city: e.target.value });
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-1-2 addCity' },
-	            React.createElement(
-	                'p',
-	                null,
-	                React.createElement('input', { type: 'text',
-	                    className: 'pure-u-23-24',
-	                    onChange: this.onCityChange,
-	                    value: this.state.city })
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'button-large pure-button',
-	                    onClick: this.onAddCity },
-	                'Создать'
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AddCity;
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var DeleteCity = React.createClass({
-	    displayName: 'DeleteCity',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            city: ""
-	        };
-	    },
-
-	    onDeleteCity: function onDeleteCity(e) {
-	        var deleteCity = this.state.city;
-	        if (deleteCity === '') return;
-
-	        this.props.onDeleteCity(deleteCity);
-	        this.setState({ city: '...' });
-	        e.preventDefault();
-	    },
-
-	    onCityChange: function onCityChange(e) {
-	        this.setState({ city: e.target.value });
-	    },
-
-	    render: function render() {
-	        var cityOptions = this.props.cities.map(toOption);
-
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-1-2 deleteCity' },
-	            React.createElement(
-	                'p',
-	                null,
-	                React.createElement(
-	                    'select',
-	                    { className: 'pure-u-23-24', onChange: this.onCityChange },
-	                    cityOptions
-	                )
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'button-large pure-button',
-	                    onClick: this.onDeleteCity },
-	                'Удалить'
-	            )
-	        );
-
-	        function toOption(city) {
-	            return React.createElement(
-	                'option',
-	                { value: city },
-	                city
-	            );
-	        }
-	    }
-	});
-
-	module.exports = DeleteCity;
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AddState = __webpack_require__(186);
-	var DeleteState = __webpack_require__(187);
-
-	var EditState = React.createClass({
-	    displayName: 'EditState',
-
-	    render: function render() {
-	        return React.createElement(
-	            'form',
-	            { className: 'pure-form EditState' },
-	            React.createElement(
-	                'fieldset',
-	                null,
-	                React.createElement(
-	                    'legend',
-	                    null,
-	                    'Статус'
-	                ),
-	                React.createElement(
-	                    'div',
-	                    { className: 'pure-g' },
-	                    React.createElement(AddState, { onAddState: this.props.onAddState }),
-	                    React.createElement(DeleteState, { states: this.props.states,
-	                        onDeleteState: this.props.onDeleteState })
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = EditState;
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var AddState = React.createClass({
-	    displayName: 'AddState',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            state: ""
-	        };
-	    },
-
-	    onAddState: function onAddState(e) {
-	        var newState = this.state.state;
-	        if (newState === '') return;
-
-	        this.props.onAddState(newState);
-	        this.setState({ state: '' });
-	        e.preventDefault();
-	    },
-
-	    onStateChange: function onStateChange(e) {
-	        this.setState({ state: e.target.value });
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-1-2 addState' },
-	            React.createElement(
-	                'p',
-	                null,
-	                React.createElement('input', { type: 'text',
-	                    className: 'pure-u-23-24',
-	                    onChange: this.onStateChange,
-	                    value: this.state.state })
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'button-large pure-button',
-	                    onClick: this.onAddState },
-	                'Создать'
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AddState;
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var DeleteState = React.createClass({
-	    displayName: 'DeleteState',
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            state: ""
-	        };
-	    },
-
-	    onDeleteState: function onDeleteState(e) {
-	        var deleteState = this.state.state;
-	        if (deleteState === '') return;
-
-	        this.setState({ state: '...' });
-	        this.props.onDeleteState(deleteState);
-	        e.preventDefault();
-	    },
-
-	    onStateChange: function onStateChange(e) {
-	        this.setState({ state: e.target.value });
-	    },
-
-	    render: function render() {
-	        var stateOptions = this.props.states.map(toOption);
-
-	        return React.createElement(
-	            'div',
-	            { className: 'pure-u-1-2 deleteState' },
-	            React.createElement(
-	                'p',
-	                null,
-	                React.createElement(
-	                    'select',
-	                    { className: 'pure-u-23-24',
-	                        onChange: this.onStateChange },
-	                    stateOptions
-	                )
-	            ),
-	            React.createElement(
-	                'button',
-	                { className: 'button-large pure-button',
-	                    onClick: this.onDeleteState },
-	                'Удалить'
-	            )
-	        );
-
-	        function toOption(state) {
-	            return React.createElement(
-	                'option',
-	                { value: state },
-	                state
-	            );
-	        }
-	    }
-	});
-
-	module.exports = DeleteState;
-
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-
-	var InputCell = React.createClass({
-	    displayName: "InputCell",
-
-	    onChange: function onChange(e) {
-	        this.props.onChange(this.props.name, e.target.value);
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            "td",
-	            null,
-	            this.props.isEdition ? React.createElement("input", { className: "pure-u-23-24",
-	                type: "text",
-	                onChange: this.onChange,
-	                value: this.props.value }) : this.props.value
-	        );
-	    }
-	});
-
-	module.exports = InputCell;
-
-/***/ },
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-
-	var SelectCell = React.createClass({
-	    displayName: "SelectCell",
-
-	    onChange: function onChange(e) {
-	        this.props.onChange(this.props.name, e.target.value);
-	    },
-
-	    render: function render() {
-	        var options = this.props.values.map(toOption);
-
-	        return React.createElement(
-	            "td",
-	            null,
-	            this.props.isEdition ? React.createElement(
-	                "select",
-	                { className: "pure-u-23-24",
-	                    onChange: this.onChange,
-	                    value: this.props.value },
-	                React.createElement(
-	                    "option",
-	                    { value: "..." },
-	                    "..."
-	                ),
-	                options
-	            ) : this.props.value
-	        );
-
-	        function toOption(value) {
-	            return React.createElement(
-	                "option",
-	                { value: value },
-	                value
-	            );
-	        }
-	    }
-	});
-
-	module.exports = SelectCell;
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
 	//     http://underscorejs.org
 	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -33168,6 +31865,1308 @@
 	  }
 	}.call(this));
 
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var FromCity = __webpack_require__(171);
+	var ToCity = __webpack_require__(172);
+	var State = __webpack_require__(173);
+
+	var ControlPanel = React.createClass({
+	    displayName: 'ControlPanel',
+
+	    getInitialState: function getInitialState() {
+	        this.controlFilters = {
+	            fromCity: null,
+	            toCity: null,
+	            state: null
+	        };
+	        return {};
+	    },
+
+	    switchMode: function switchMode(e) {
+	        var isEdition = this.props.onSwitchMode();
+	        e.preventDefault();
+	    },
+
+	    chageFilters: function chageFilters() {
+	        this.props.onFiltersChange(this.controlFilters);
+	    },
+
+	    onFromCityChange: function onFromCityChange(fromCity) {
+	        this.controlFilters.fromCity = fromCity;
+	        this.chageFilters();
+	    },
+	    onToCityChange: function onToCityChange(toCity) {
+	        this.controlFilters.toCity = toCity;
+	        this.chageFilters();
+	    },
+	    onStateChange: function onStateChange(state) {
+	        this.controlFilters.state = state;
+	        this.chageFilters();
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'controlPanel' },
+	            React.createElement(
+	                'form',
+	                { className: 'pure-form' },
+	                React.createElement(
+	                    'fieldset',
+	                    null,
+	                    React.createElement(
+	                        'legend',
+	                        null,
+	                        React.createElement(
+	                            'h1',
+	                            null,
+	                            'Авиарейсы'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-g' },
+	                        React.createElement(FromCity, { cities: this.props.cities, onChange: this.onFromCityChange }),
+	                        React.createElement(ToCity, { cities: this.props.cities, onChange: this.onToCityChange }),
+	                        React.createElement(State, { states: this.props.states, onChange: this.onStateChange }),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'pure-u-3-24' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'counter' },
+	                                'Авиорейсов: ',
+	                                this.props.amountAirlines
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'pure-u-3-24' },
+	                            React.createElement(
+	                                'button',
+	                                { className: 'pure-button',
+	                                    onClick: this.switchMode },
+	                                this.props.isEdition ? "Выйти из редактирования" : "Редактировать"
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = ControlPanel;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var FromCity = React.createClass({
+	    displayName: 'FromCity',
+
+	    onChange: function onChange(e) {
+	        var city = e.target.value === '...' ? null : e.target.value;
+	        this.props.onChange(city);
+	    },
+	    render: function render() {
+	        var cityOptions = this.props.cities.map(toOption);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-6-24 fromCity' },
+	            React.createElement(
+	                'label',
+	                null,
+	                'Город отправления'
+	            ),
+	            React.createElement(
+	                'select',
+	                { className: 'pure-input-1-2', onChange: this.onChange },
+	                React.createElement(
+	                    'option',
+	                    { value: '...' },
+	                    '...'
+	                ),
+	                cityOptions
+	            )
+	        );
+
+	        function toOption(city) {
+	            return React.createElement(
+	                'option',
+	                { value: city },
+	                city
+	            );
+	        }
+	    }
+	});
+
+	module.exports = FromCity;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var ToCity = React.createClass({
+	    displayName: 'ToCity',
+
+	    onChange: function onChange(e) {
+	        var city = e.target.value === '...' ? null : e.target.value;
+	        this.props.onChange(city);
+	    },
+
+	    render: function render() {
+	        var cityOptions = this.props.cities.map(toOption);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-6-24 toCity' },
+	            React.createElement(
+	                'label',
+	                null,
+	                'Город прибытия'
+	            ),
+	            React.createElement(
+	                'select',
+	                { className: 'pure-input-1-2', onChange: this.onChange },
+	                React.createElement(
+	                    'option',
+	                    { value: '...' },
+	                    '...'
+	                ),
+	                cityOptions
+	            )
+	        );
+
+	        function toOption(city) {
+	            return React.createElement(
+	                'option',
+	                { value: city },
+	                city
+	            );
+	        }
+	    }
+	});
+
+	module.exports = ToCity;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var State = React.createClass({
+	    displayName: 'State',
+
+	    onChange: function onChange(e) {
+	        var state = e.target.value === '...' ? null : e.target.value;
+	        this.props.onChange(state);
+	    },
+
+	    render: function render() {
+	        var stateOptions = this.props.states.map(toOption);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-5-24 state' },
+	            React.createElement(
+	                'label',
+	                null,
+	                'Статус'
+	            ),
+	            React.createElement(
+	                'select',
+	                { className: 'pure-input-1-2', onChange: this.onChange },
+	                React.createElement(
+	                    'option',
+	                    { value: '...' },
+	                    '...'
+	                ),
+	                stateOptions
+	            )
+	        );
+
+	        function toOption(state) {
+	            return React.createElement(
+	                'option',
+	                { value: state },
+	                state
+	            );
+	        }
+	    }
+	});
+
+	module.exports = State;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AirlineView = __webpack_require__(175);
+	var EditionAirline = __webpack_require__(176);
+
+	var AirlineTable = React.createClass({
+	    displayName: 'AirlineTable',
+
+	    getRows: function getRows() {
+	        var self = this;
+	        return this.props.airlines.map(this.props.isEditionTable ? toEditionAirline : toAirline);
+
+	        function toAirline(data) {
+	            return React.createElement(AirlineView, { airline: data });
+	        }
+
+	        function toEditionAirline(data) {
+	            return React.createElement(EditionAirline, { airline: data,
+	                onSaveAirline: self.props.onSaveAirline,
+	                onDeleteAirline: self.props.onDeleteAirline,
+	                cities: self.props.cities,
+	                states: self.props.states
+	            });
+	        }
+	    },
+
+	    render: function render() {
+	        var airlines = this.getRows();
+	        return React.createElement(
+	            'div',
+	            { className: 'airlineTable' },
+	            React.createElement(
+	                'form',
+	                { className: 'pure-form' },
+	                React.createElement(
+	                    'table',
+	                    { className: 'pure-table full-width' },
+	                    React.createElement(
+	                        'thead',
+	                        null,
+	                        React.createElement(
+	                            'tr',
+	                            null,
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                '#'
+	                            ),
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                'Тип'
+	                            ),
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                'Откуда'
+	                            ),
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                'Куда'
+	                            ),
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                'Время вылета'
+	                            ),
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                'Время посадки'
+	                            ),
+	                            React.createElement(
+	                                'th',
+	                                null,
+	                                'Статус'
+	                            ),
+	                            this.props.isEditionTable ? React.createElement(
+	                                'th',
+	                                null,
+	                                ' '
+	                            ) : null,
+	                            this.props.isEditionTable ? React.createElement(
+	                                'th',
+	                                null,
+	                                ' '
+	                            ) : null
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'tbody',
+	                        null,
+	                        airlines
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AirlineTable;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AirlineView = React.createClass({
+	    displayName: 'AirlineView',
+
+	    render: function render() {
+	        return React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.number
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.planeType
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.fromCity
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.toCity
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.startTime
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.endTime
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                this.props.airline.state
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AirlineView;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var InputCell = __webpack_require__(177);
+	var SelectCell = __webpack_require__(178);
+
+	var AdminAirlineView = React.createClass({
+	    displayName: 'AdminAirlineView',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            id: 0,
+	            number: "",
+	            planeType: "",
+	            fromCity: "",
+	            toCity: "",
+	            startTime: "",
+	            endTime: "",
+	            state: "",
+	            isEdition: false
+	        };
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        // console.log(this.state);
+	        if (this.state.id != this.props.airline.id) {
+	            this.setState(this.props.airline);
+	            // console.log(this.props.airline);
+	        }
+	    },
+
+	    onChange: function onChange(name, value) {
+	        var data = {};
+	        data[name] = value;
+	        this.setState(data);
+	    },
+
+	    changeMode: function changeMode(e) {
+	        var newMode = !this.state.isEdition;
+	        this.setState({ isEdition: newMode });
+	        if (!newMode) {
+	            this.props.onSaveAirline({
+	                id: this.state.id,
+	                number: this.state.number,
+	                planeType: this.state.planeType,
+	                fromCity: this.state.fromCity,
+	                toCity: this.state.toCity,
+	                startTime: this.state.startTime,
+	                endTime: this.state.endTime,
+	                state: this.state.state
+	            });
+	        }
+	        e.preventDefault();
+	    },
+
+	    onDelete: function onDelete(e) {
+	        this.props.onDeleteAirline(this.state.id);
+	        e.preventDefault();
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'tr',
+	            null,
+	            React.createElement(InputCell, { isEdition: this.state.isEdition,
+	                name: 'number',
+	                onChange: this.onChange,
+	                value: this.state.number }),
+	            React.createElement(InputCell, { isEdition: this.state.isEdition,
+	                name: 'planeType',
+	                onChange: this.onChange,
+	                value: this.state.planeType }),
+	            React.createElement(SelectCell, { isEdition: this.state.isEdition,
+	                name: 'fromCity',
+	                onChange: this.onChange,
+	                value: this.state.fromCity,
+	                values: this.props.cities }),
+	            React.createElement(SelectCell, { isEdition: this.state.isEdition,
+	                name: 'toCity',
+	                onChange: this.onChange,
+	                value: this.state.toCity,
+	                values: this.props.cities }),
+	            React.createElement(InputCell, { isEdition: this.state.isEdition,
+	                name: 'startTime',
+	                onChange: this.onChange,
+	                value: this.state.startTime }),
+	            React.createElement(InputCell, { isEdition: this.state.isEdition,
+	                name: 'endTime',
+	                onChange: this.onChange,
+	                value: this.state.endTime }),
+	            React.createElement(SelectCell, { isEdition: this.state.isEdition,
+	                name: 'state',
+	                onChange: this.onChange,
+	                value: this.state.state,
+	                values: this.props.states }),
+	            React.createElement(
+	                'td',
+	                null,
+	                React.createElement(
+	                    'button',
+	                    { className: 'pure-button',
+	                        onClick: this.changeMode },
+	                    this.state.isEdition ? "Сохранить" : "Редактировать"
+	                )
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                React.createElement(
+	                    'button',
+	                    { className: 'pure-button',
+	                        onClick: this.onDelete },
+	                    'Удалить'
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AdminAirlineView;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var InputCell = React.createClass({
+	    displayName: "InputCell",
+
+	    onChange: function onChange(e) {
+	        this.props.onChange(this.props.name, e.target.value);
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            "td",
+	            null,
+	            this.props.isEdition ? React.createElement("input", { className: "pure-u-23-24",
+	                type: "text",
+	                onChange: this.onChange,
+	                value: this.props.value }) : this.props.value
+	        );
+	    }
+	});
+
+	module.exports = InputCell;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var SelectCell = React.createClass({
+	    displayName: "SelectCell",
+
+	    onChange: function onChange(e) {
+	        this.props.onChange(this.props.name, e.target.value);
+	    },
+
+	    render: function render() {
+	        var options = this.props.values.map(toOption);
+
+	        return React.createElement(
+	            "td",
+	            null,
+	            this.props.isEdition ? React.createElement(
+	                "select",
+	                { className: "pure-u-23-24",
+	                    onChange: this.onChange,
+	                    value: this.props.value },
+	                React.createElement(
+	                    "option",
+	                    { value: "..." },
+	                    "..."
+	                ),
+	                options
+	            ) : this.props.value
+	        );
+
+	        function toOption(value) {
+	            return React.createElement(
+	                "option",
+	                { value: value },
+	                value
+	            );
+	        }
+	    }
+	});
+
+	module.exports = SelectCell;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AddAirline = __webpack_require__(180);
+	var EditCity = __webpack_require__(184);
+	var EditState = __webpack_require__(187);
+
+	var AddPanel = React.createClass({
+	    displayName: 'AddPanel',
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'addPanel' },
+	            React.createElement(AddAirline, { cities: this.props.cities,
+	                states: this.props.states,
+	                onAddAirline: this.props.onAddAirline }),
+	            React.createElement('legend', null),
+	            React.createElement(
+	                'div',
+	                { className: 'pure-g' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'pure-u-1-2' },
+	                    React.createElement(EditCity, { cities: this.props.cities,
+	                        onAddCity: this.props.onAddCity,
+	                        onDeleteCity: this.props.onDeleteCity
+	                    })
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'pure-u-1-2' },
+	                    React.createElement(EditState, { states: this.props.states,
+	                        onAddState: this.props.onAddState,
+	                        onDeleteState: this.props.onDeleteState })
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddPanel;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var FromCity = __webpack_require__(181);
+	var ToCity = __webpack_require__(182);
+	var State = __webpack_require__(183);
+
+	var initAirline = {
+	    number: "",
+	    planeType: "",
+	    fromCity: "...",
+	    toCity: "...",
+	    startTime: "",
+	    endTime: "",
+	    state: "..."
+	};
+
+	var AddAirline = React.createClass({
+	    displayName: 'AddAirline',
+
+	    getInitialState: function getInitialState() {
+	        return Object.create(initAirline);
+	    },
+
+	    onAddAirline: function onAddAirline(e) {
+	        var state = this.state;
+
+	        this.props.onAddAirline({
+	            number: state.number,
+	            planeType: state.planeType,
+	            fromCity: state.fromCity,
+	            toCity: state.toCity,
+	            startTime: state.startTime,
+	            endTime: state.endTime,
+	            state: state.state
+	        });
+
+	        this.setState({
+	            number: "",
+	            planeType: "",
+	            fromCity: "...",
+	            toCity: "...",
+	            startTime: "",
+	            endTime: "",
+	            state: "..."
+	        });
+	        e.preventDefault();
+	    },
+
+	    onNumperChange: function onNumperChange(e) {
+	        this.setState({ number: e.target.value });
+	    },
+
+	    onPlaneTypeChange: function onPlaneTypeChange(e) {
+	        this.setState({ planeType: e.target.value });
+	    },
+
+	    onFromCityChange: function onFromCityChange(e) {
+	        this.setState({ fromCity: e.target.value });
+	    },
+
+	    onToCityChange: function onToCityChange(e) {
+	        this.setState({ toCity: e.target.value });
+	    },
+
+	    onStateChange: function onStateChange(e) {
+	        this.setState({ state: e.target.value });
+	    },
+
+	    onStartTimeChange: function onStartTimeChange(e) {
+	        this.setState({ startTime: e.target.value });
+	    },
+
+	    onEndTimeChange: function onEndTimeChange(e) {
+	        this.setState({ endTime: e.target.value });
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'form',
+	            { className: 'pure-form pure-form-stacked' },
+	            React.createElement(
+	                'fieldset',
+	                null,
+	                React.createElement(
+	                    'legend',
+	                    null,
+	                    'Создать'
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'pure-g' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-5-24' },
+	                        React.createElement(
+	                            'label',
+	                            null,
+	                            'Номер рейса:'
+	                        ),
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onNumperChange,
+	                            value: this.state.number })
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-6-24' },
+	                        React.createElement(
+	                            'label',
+	                            null,
+	                            'Тип самолета:'
+	                        ),
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onPlaneTypeChange,
+	                            value: this.state.planeType })
+	                    ),
+	                    React.createElement(FromCity, { cities: this.props.cities,
+	                        onFromCityChange: this.onFromCityChange,
+	                        value: this.state.fromCity }),
+	                    React.createElement(ToCity, { cities: this.props.cities,
+	                        onToCityChange: this.onToCityChange,
+	                        value: this.state.toCity }),
+	                    React.createElement(State, { states: this.props.states,
+	                        onStateChange: this.onStateChange,
+	                        value: this.state.state }),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-5-24' },
+	                        React.createElement(
+	                            'label',
+	                            null,
+	                            'Время вылет:'
+	                        ),
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onStartTimeChange,
+	                            value: this.state.startTime })
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-6-24' },
+	                        React.createElement(
+	                            'label',
+	                            null,
+	                            'Время посадки:'
+	                        ),
+	                        React.createElement('input', { className: 'pure-u-23-24', type: 'text',
+	                            onChange: this.onEndTimeChange,
+	                            value: this.state.endTime })
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'pure-u-3-24' },
+	                        React.createElement('br', null),
+	                        React.createElement(
+	                            'button',
+	                            { className: 'button-large pure-button',
+	                                onClick: this.onAddAirline },
+	                            'Создать'
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddAirline;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var FromCity = React.createClass({
+	    displayName: "FromCity",
+
+	    render: function render() {
+	        var cityOptions = this.props.cities.map(toOption);
+
+	        return React.createElement(
+	            "div",
+	            { className: "pure-u-4-24 fromCity" },
+	            React.createElement(
+	                "label",
+	                null,
+	                "Город отправления"
+	            ),
+	            React.createElement(
+	                "select",
+	                { className: "pure-u-23-24",
+	                    onChange: this.props.onFromCityChange,
+	                    value: this.props.value },
+	                React.createElement(
+	                    "option",
+	                    { value: "..." },
+	                    "..."
+	                ),
+	                cityOptions
+	            )
+	        );
+
+	        function toOption(city) {
+	            return React.createElement(
+	                "option",
+	                { value: city },
+	                city
+	            );
+	        }
+	    }
+	});
+
+	module.exports = FromCity;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var ToCity = React.createClass({
+	    displayName: "ToCity",
+
+	    render: function render() {
+	        var cityOptions = this.props.cities.map(toOption);
+
+	        return React.createElement(
+	            "div",
+	            { className: "pure-u-4-24 toCity" },
+	            React.createElement(
+	                "label",
+	                null,
+	                "Город прибытия"
+	            ),
+	            React.createElement(
+	                "select",
+	                { className: "pure-u-23-24",
+	                    onChange: this.props.onToCityChange,
+	                    value: this.props.value },
+	                React.createElement(
+	                    "option",
+	                    { value: "..." },
+	                    "..."
+	                ),
+	                cityOptions
+	            )
+	        );
+
+	        function toOption(city) {
+	            return React.createElement(
+	                "option",
+	                { value: city },
+	                city
+	            );
+	        }
+	    }
+	});
+
+	module.exports = ToCity;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var State = React.createClass({
+	    displayName: "State",
+
+	    render: function render() {
+	        var stateOptions = this.props.states.map(toOption);
+
+	        return React.createElement(
+	            "div",
+	            { className: "pure-u-5-24 state" },
+	            React.createElement(
+	                "label",
+	                null,
+	                "Статус"
+	            ),
+	            React.createElement(
+	                "select",
+	                { className: "pure-u-23-24",
+	                    onChange: this.props.onStateChange,
+	                    value: this.props.value },
+	                React.createElement(
+	                    "option",
+	                    { value: "..." },
+	                    "..."
+	                ),
+	                stateOptions
+	            )
+	        );
+
+	        function toOption(state) {
+	            return React.createElement(
+	                "option",
+	                { value: state },
+	                state
+	            );
+	        }
+	    }
+	});
+
+	module.exports = State;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AddCity = __webpack_require__(185);
+	var DeleteCity = __webpack_require__(186);
+
+	var EditCity = React.createClass({
+	    displayName: 'EditCity',
+
+	    render: function render() {
+	        return React.createElement(
+	            'form',
+	            { className: 'pure-form EditCity' },
+	            React.createElement(
+	                'fieldset',
+	                null,
+	                React.createElement(
+	                    'legend',
+	                    null,
+	                    'Город'
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'pure-g' },
+	                    React.createElement(AddCity, { onAddCity: this.props.onAddCity }),
+	                    React.createElement(DeleteCity, { cities: this.props.cities,
+	                        onDeleteCity: this.props.onDeleteCity })
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = EditCity;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AddCity = React.createClass({
+	    displayName: 'AddCity',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            city: ""
+	        };
+	    },
+
+	    onAddCity: function onAddCity(e) {
+	        var newCity = this.state.city;
+	        if (newCity === '') return;
+
+	        this.props.onAddCity(newCity);
+	        this.setState({ city: '' });
+	        e.preventDefault();
+	    },
+
+	    onCityChange: function onCityChange(e) {
+	        this.setState({ city: e.target.value });
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-1-2 addCity' },
+	            React.createElement(
+	                'p',
+	                null,
+	                React.createElement('input', { type: 'text',
+	                    className: 'pure-u-23-24',
+	                    onChange: this.onCityChange,
+	                    value: this.state.city })
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'button-large pure-button',
+	                    onClick: this.onAddCity },
+	                'Создать'
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddCity;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var DeleteCity = React.createClass({
+	    displayName: 'DeleteCity',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            city: ""
+	        };
+	    },
+
+	    onDeleteCity: function onDeleteCity(e) {
+	        var deleteCity = this.state.city;
+	        if (deleteCity === '') return;
+
+	        this.props.onDeleteCity(deleteCity);
+	        this.setState({ city: '...' });
+	        e.preventDefault();
+	    },
+
+	    onCityChange: function onCityChange(e) {
+	        this.setState({ city: e.target.value });
+	    },
+
+	    render: function render() {
+	        var cityOptions = this.props.cities.map(toOption);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-1-2 deleteCity' },
+	            React.createElement(
+	                'p',
+	                null,
+	                React.createElement(
+	                    'select',
+	                    { className: 'pure-u-23-24', onChange: this.onCityChange },
+	                    cityOptions
+	                )
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'button-large pure-button',
+	                    onClick: this.onDeleteCity },
+	                'Удалить'
+	            )
+	        );
+
+	        function toOption(city) {
+	            return React.createElement(
+	                'option',
+	                { value: city },
+	                city
+	            );
+	        }
+	    }
+	});
+
+	module.exports = DeleteCity;
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AddState = __webpack_require__(188);
+	var DeleteState = __webpack_require__(189);
+
+	var EditState = React.createClass({
+	    displayName: 'EditState',
+
+	    render: function render() {
+	        return React.createElement(
+	            'form',
+	            { className: 'pure-form EditState' },
+	            React.createElement(
+	                'fieldset',
+	                null,
+	                React.createElement(
+	                    'legend',
+	                    null,
+	                    'Статус'
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'pure-g' },
+	                    React.createElement(AddState, { onAddState: this.props.onAddState }),
+	                    React.createElement(DeleteState, { states: this.props.states,
+	                        onDeleteState: this.props.onDeleteState })
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = EditState;
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var AddState = React.createClass({
+	    displayName: 'AddState',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            state: ""
+	        };
+	    },
+
+	    onAddState: function onAddState(e) {
+	        var newState = this.state.state;
+	        if (newState === '') return;
+
+	        this.props.onAddState(newState);
+	        this.setState({ state: '' });
+	        e.preventDefault();
+	    },
+
+	    onStateChange: function onStateChange(e) {
+	        this.setState({ state: e.target.value });
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-1-2 addState' },
+	            React.createElement(
+	                'p',
+	                null,
+	                React.createElement('input', { type: 'text',
+	                    className: 'pure-u-23-24',
+	                    onChange: this.onStateChange,
+	                    value: this.state.state })
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'button-large pure-button',
+	                    onClick: this.onAddState },
+	                'Создать'
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddState;
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var DeleteState = React.createClass({
+	    displayName: 'DeleteState',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            state: ""
+	        };
+	    },
+
+	    onDeleteState: function onDeleteState(e) {
+	        var deleteState = this.state.state;
+	        if (deleteState === '') return;
+
+	        this.setState({ state: '...' });
+	        this.props.onDeleteState(deleteState);
+	        e.preventDefault();
+	    },
+
+	    onStateChange: function onStateChange(e) {
+	        this.setState({ state: e.target.value });
+	    },
+
+	    render: function render() {
+	        var stateOptions = this.props.states.map(toOption);
+
+	        return React.createElement(
+	            'div',
+	            { className: 'pure-u-1-2 deleteState' },
+	            React.createElement(
+	                'p',
+	                null,
+	                React.createElement(
+	                    'select',
+	                    { className: 'pure-u-23-24',
+	                        onChange: this.onStateChange },
+	                    stateOptions
+	                )
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'button-large pure-button',
+	                    onClick: this.onDeleteState },
+	                'Удалить'
+	            )
+	        );
+
+	        function toOption(state) {
+	            return React.createElement(
+	                'option',
+	                { value: state },
+	                state
+	            );
+	        }
+	    }
+	});
+
+	module.exports = DeleteState;
 
 /***/ }
 /******/ ]);
